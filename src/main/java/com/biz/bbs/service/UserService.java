@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.biz.bbs.domain.UserDetailsVO;
 import com.biz.bbs.persistence.UserDao;
 
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,17 @@ public class UserService {
 		
 		int ret = userDao.insert(userVO);
 		return ret;
+	}
+
+	// 기존에 ID가 있는지 검사
+	public boolean isExistsId(String username) {
+		
+		UserDetailsVO userVO = userDao.findByUserName(username);
+		String user_name = userVO.getUsername();
+		if(user_name != null && user_name.equalsIgnoreCase(username))
+			return true;
+		
+		return false;
 	}
 	
 	

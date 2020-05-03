@@ -58,6 +58,7 @@
 			logout-url="/logout"
 			invalidate-session="true"
 			logout-success-url=""
+			delete-cookies="true"
 		/>
 	</security:http>
 </beans>
