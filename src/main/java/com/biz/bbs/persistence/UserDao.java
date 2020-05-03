@@ -1,6 +1,7 @@
 package com.biz.bbs.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import com.biz.bbs.domain.UserDetailsVO;
 
@@ -12,7 +13,7 @@ public interface UserDao {
 	
 	public UserDetailsVO findByUserName(String username);
 	
-	public int insert(UserDetailsVO userVO);
+	public int insert(Map<String, String> userMap);
 	
 	public UserDetailsVO findById(Long id);
 	

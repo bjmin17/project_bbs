@@ -3,9 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
- <mapper namespace="com.biz.bbs.persistence.BBsDao">
+ <mapper namespace="com.biz.bbs.persistence.UserDao">
 	<insert id="insert">
-		INSERT INTO `tbl_users`
+		INSERT INTO `secure`.`tbl_users`
 			(
 			`user_id`,
 			`user_pass`,

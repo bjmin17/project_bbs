@@ -2,7 +2,8 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
+	<%@ include file="/WEB-INF/views/include/include-head.jspf" %>
+	<%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 </head>
 <body>
 <h1>

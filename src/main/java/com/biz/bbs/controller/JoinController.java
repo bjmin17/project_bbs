@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biz.bbs.domain.UserDetailsVO;
+import com.biz.bbs.service.UserService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,9 +24,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RequestMapping(value = "/join")
 @Slf4j
+@RequiredArgsConstructor
 @Controller
 public class JoinController {
 
+	private final UserService uService;
+	
 	@RequestMapping(value="",method = RequestMethod.GET)
 	public String join(@ModelAttribute("userVO") UserDetailsVO userVO, Model model) {
 		return "auth/join";
@@ -37,6 +42,8 @@ public class JoinController {
 //		return "auth/join";
 //		return "redirect:/";
 		log.debug("아이디 {}, 비번{}", userVO.getUsername(), userVO.getPassword());
+		
+		int ret = uService.insert(userVO.getUsername(), userVO.getPassword());
 		return String.format("아이디 : <b>%s</b>, 비번 : <b>%S</b>", userVO.getUsername(), userVO.getPassword());
 	}
 	
