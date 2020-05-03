@@ -6,6 +6,7 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
+<link rel="stylesheet" href="${rootPath}/css/login-css.css?ver=20200503001">
 	<script>
 	$(function(){
 		$(document).on("click","button.join",function(){
@@ -14,12 +15,6 @@
 	})
 	</script>
 	<style>
-		section.container{
-			border: 1px solid gray;
-			margin-top: 13%;
-			width:500px;
-		}
-		
 		section.container {
 			border-radius: 10px; 
 			height: 360px;
@@ -56,6 +51,5 @@
 			
 		</form:form>
 	</section>
-<h2>로그인 페이지</h2>
 </body>
 </html>

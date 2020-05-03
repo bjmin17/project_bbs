@@ -7,6 +7,7 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
+<link rel="stylesheet" href="${rootPath}/css/login-css.css?ver=20200503001">
 <script>
 	$(function(){
 		$(document).on("click","#btn-join",function(){

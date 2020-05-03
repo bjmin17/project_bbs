@@ -6,6 +6,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Spring Security 기반
+ * 로그인 프로젝트
+ * 메인 컨트롤러
+ * 
+ * @since 2020-05-03
+ * @author jminban
+ *
+ */
 @RequestMapping(value="/user")
 @Slf4j
 @Controller
@@ -16,8 +25,4 @@ public class UserController {
 		return "auth/login";
 	}
 	
-	@RequestMapping(value="/join",method=RequestMethod.GET)
-	public String join() {
-		return "auth/join";
-	}
 }

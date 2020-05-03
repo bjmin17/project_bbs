@@ -27,6 +27,7 @@
 		<param-value>
 			/WEB-INF/spring/db-auth-context.xml
 			/WEB-INF/spring/security-context.xml
+			/WEB-INF/spring/mybatis-context.xml
 			/WEB-INF/spring/root-context.xml
 		</param-value>
 	</context-param>
