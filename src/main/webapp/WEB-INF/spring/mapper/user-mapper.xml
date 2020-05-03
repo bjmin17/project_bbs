@@ -5,7 +5,10 @@
   
  <mapper namespace="com.biz.bbs.persistence.UserDao">
  
- 	
+	<select id="create_table">
+		${create_table}
+	</select> 	
+	
 	<insert id="insert">
 		INSERT INTO `secure`.`tbl_users`
 			(

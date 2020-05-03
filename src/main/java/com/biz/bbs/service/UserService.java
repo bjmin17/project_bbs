@@ -3,10 +3,12 @@ package com.biz.bbs.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.biz.bbs.domain.UserDetailsVO;
+import com.biz.bbs.persistence.AuthoritiesDao;
 import com.biz.bbs.persistence.UserDao;
 
 import lombok.RequiredArgsConstructor;
@@ -20,11 +22,44 @@ import lombok.RequiredArgsConstructor;
  *
  */
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class UserService {
 
 	private final PasswordEncoder passwordEncoder;
 	private final UserDao userDao;
+	private final AuthoritiesDao authDao;
+	
+	
+	@Autowired
+	public UserService(PasswordEncoder passwordEncoder, UserDao userDao, AuthoritiesDao authDao) {
+		super();
+		this.passwordEncoder = passwordEncoder;
+		this.userDao = userDao;
+		this.authDao = authDao;
+		
+		String create_user_table = 
+						" CREATE TABLE IF NOT EXISTS tbl_users( " +
+						"        id bigint PRIMARY KEY AUTO_INCREMENT, " +
+						"        user_id varchar(50) UNIQUE, " +
+						"        user_pass varchar(125), " +
+						"        enabled boolean default true, " +
+						"        email varchar(50)," +
+						"        phone varchar(20)," +
+						"        address varchar(125)" +
+						" ) ";
+		
+		String create_auth_table = 
+						" CREATE TABLE IF NOT EXISTS authorities(" +
+						"        id bigint PRIMARY KEY AUTO_INCREMENT," +
+						"        username varchar(50)," +
+						"        authority varchar(50)" +
+						" ) ";
+		
+		userDao.create_table(create_user_table);
+		userDao.create_table(create_auth_table);
+	}
+
+	
 	
 	/*
 	 * 회원가입을 신청하면 비밀번호는 암호화,
@@ -47,8 +82,7 @@ public class UserService {
 	public boolean isExistsId(String username) {
 		
 		UserDetailsVO userVO = userDao.findByUserName(username);
-		String user_name = userVO.getUsername();
-		if(user_name != null && user_name.equalsIgnoreCase(username))
+		if(userVO != null && userVO.getUsername().equalsIgnoreCase(username))
 			return true;
 		
 		return false;

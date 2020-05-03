@@ -68,6 +68,7 @@
 						return false
 					} else {
 						$("#m_username").text("* 사용가능한 사용자ID")
+						$("#m_username").css("color","blue")
 					}
 					
 				},
