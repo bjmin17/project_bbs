@@ -7,6 +7,16 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security-5.2.xsd">
 
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/spring/properties/spring-security.message.ko</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="cacheSeconds" value="5"/>
+	</bean>
+
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<constructor-arg index="0" value="4"/>
 	</bean>
@@ -24,9 +34,9 @@
 		</property>
 		<property name="authoritiesByUsernameQuery">
 			<value>
-				SELECT user_id, authority
+				SELECT username, authority
 				FROM authorities
-				WHERE user_id=?
+				WHERE username=?
 			</value>
 		</property>
 	</bean>
