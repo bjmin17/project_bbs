@@ -1,10 +1,15 @@
 package com.biz.bbs.controller;
 
+import java.security.Principal;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.biz.bbs.domain.UserDetailsVO;
 import com.biz.bbs.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,6 +45,38 @@ public class UserController {
 			return "EXISTS";
 		}
 		return "NO";
+	}
+	
+	@RequestMapping(value="/mypage",method=RequestMethod.GET)
+	public String mypage(Principal principal, Model model) {
+		// 사용자정보 뽑아오는 방법
+		// principal을 가져와서 토큰으로 가져온 후, getPrincipal로 정보 가져오기
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+		
+		userVO.setAuthorities(upa.getAuthorities());
+		
+		model.addAttribute("userVO",userVO);
+		return "auth/user_view";
+	}
+	
+	@RequestMapping(value="/mypage",method=RequestMethod.POST)
+	public String mypage(UserDetailsVO userVO, String[] auth, Model model) {
+		
+		/*
+		 * Security Session 정보가 저장된 메모리에 직접 접근하여
+		 * session user 정보를 수집하는 방법은
+		 * UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		
+			UserDetailsVO oldUserVO = (UserDetailsVO) upa.getPrincipal();
+			oldUserVO.setEmail(userVO.getEmail());
+		 * 코드는 쉬워지나 보안에 치명적인 문제를 일으킬 수 있다.
+		 * 
+		 */
+		int ret = uService.update(userVO, auth);
+		
+		return "redirect:/user/mypage";
 	}
 	
 	

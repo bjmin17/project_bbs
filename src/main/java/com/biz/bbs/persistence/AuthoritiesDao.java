@@ -19,4 +19,9 @@ public interface AuthoritiesDao {
 	// 사용자 이름으로 권한 테이블에서 권한 리스트를 SELECT
 	@Select("SELECT * FROM authorities WHERE username = #{username}")
 	public List<AuthorityVO> findByUserName(String username);
+
+	public void insert(List<AuthorityVO> authCollection);
+	
+	public void delete(String username);
+
 }

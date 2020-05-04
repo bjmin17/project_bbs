@@ -3,9 +3,9 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/views/include/include-head.jspf" %>
-	<%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 <h1>
 	Hello world!  
 </h1>
