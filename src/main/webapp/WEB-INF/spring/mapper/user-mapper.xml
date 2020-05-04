@@ -19,7 +19,7 @@
 			(
 			#{username},
 			#{password},
-			#{enabled})
+			true)
 					
 	</insert> 
  

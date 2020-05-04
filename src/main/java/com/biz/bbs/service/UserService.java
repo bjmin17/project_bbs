@@ -74,6 +74,7 @@ public class UserService {
 		userVO.put("username", username);
 		userVO.put("password", encPassword);
 		
+		
 		int ret = userDao.insert(userVO);
 		return ret;
 	}

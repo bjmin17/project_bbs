@@ -41,10 +41,14 @@
 		</property>
 	</bean>
 	
+	<context:component-scan base-package="com.biz.bbs.service.auth"/>
+	<!-- authProviderImpl을 spring security에게 알려주는 코드 -->
+	<bean id="authProvider" class="com.biz.bbs.service.auth.AuthProviderImpl">
+	
+	</bean>
+	
 	<security:authentication-manager>
-		<security:authentication-provider user-service-ref="secureDao">
-			<security:password-encoder ref="passwordEncoder"/>
-		</security:authentication-provider>
+		<security:authentication-provider ref="authProvider"/>
 	</security:authentication-manager>
 
 	<security:http auto-config="true" use-expressions="true">
