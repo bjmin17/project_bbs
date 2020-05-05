@@ -178,6 +178,26 @@ public class UserService {
 		}
 		return authorities;
 	}
+
+
+	/**
+	 * @since 2020-05-05
+	 * @param password
+	 * @return
+	 */
+	public boolean check_password(String password) {
+		// TODO 비밀번호 체크 메서드
+		
+		// context - authentication - principal 순으로 뽑아오기
+		// 이 방법은 본인 것만 수정 가능하고
+		// 관리자는 비밀번호를 변경 못한다.
+		UserDetailsVO userVO = (UserDetailsVO) SecurityContextHolder
+										.getContext()
+										.getAuthentication()
+										.getPrincipal();
+		
+		return passwordEncoder.matches(password, userVO.getPassword());
+	}
 	
 	
 	

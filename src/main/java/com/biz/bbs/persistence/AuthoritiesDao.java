@@ -2,6 +2,7 @@ package com.biz.bbs.persistence;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
 import com.biz.bbs.domain.AuthorityVO;
@@ -22,6 +23,7 @@ public interface AuthoritiesDao {
 
 	public void insert(List<AuthorityVO> authCollection);
 	
+	@Delete("DELETE FROM authorities WHERE username = #{username}")
 	public void delete(String username);
 
 }

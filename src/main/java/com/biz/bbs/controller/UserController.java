@@ -47,6 +47,25 @@ public class UserController {
 		return "NO";
 	}
 	
+	/**
+	 * 마이페이지에서 입력한 비밀번호가
+	 * 로그인 한 비밀번호와 일치하는지 검사
+	 * 
+	 * @since 2020-05-05
+	 * @param password
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/password",method = RequestMethod.POST)
+	public String passwordCheck(String password) {
+		
+		boolean ret = uService.check_password(password);
+		
+		if(ret) return "PASS_OK";
+		
+		return "PASS_FAIL";
+	}
+	
 	@RequestMapping(value="/mypage",method=RequestMethod.GET)
 	public String mypage(Principal principal, Model model) {
 		// 사용자정보 뽑아오는 방법
