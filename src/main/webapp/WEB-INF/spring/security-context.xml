@@ -21,6 +21,7 @@
 		<constructor-arg index="0" value="4"/>
 	</bean>
 
+	<!-- 
 	<bean id="secureDao" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
 		<property name="dataSource" ref="authDB"/>
 		<property name="usersByUsernameQuery">
@@ -40,7 +41,8 @@
 			</value>
 		</property>
 	</bean>
-	
+	 -->
+	 
 	<context:component-scan base-package="com.biz.bbs.service.auth"/>
 	<!-- authProviderImpl을 spring security에게 알려주는 코드 -->
 	<bean id="authProvider" class="com.biz.bbs.service.auth.AuthProviderImpl">
@@ -71,7 +73,7 @@
 		<security:logout
 			logout-url="/logout"
 			invalidate-session="true"
-			logout-success-url=""
+			logout-success-url="/"
 			delete-cookies="true"
 		/>
 	</security:http>

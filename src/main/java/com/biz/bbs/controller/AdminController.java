@@ -67,4 +67,22 @@ public class AdminController {
 		
 		return "admin/user_detail_view";
 	}
+	
+	/**
+	 * 관리자페이지에서 회원정보 수정하기
+	 * 
+	 * @since 2020-05-06
+	 * @param username
+	 * @param userVO
+	 * @param auth
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/user_detail_view",method=RequestMethod.POST)
+	public String user_detail_view(String username, UserDetailsVO userVO, String[] auth, Model model) {
+		
+		int ret = uService.update(userVO, auth);
+		return "redirect:/admin/user_detail_view/" + userVO.getUsername();
+	}
+	
 }
