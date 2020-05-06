@@ -112,32 +112,22 @@ public class UserService {
 		return false;
 	}
 
-
 	/**
-	 * @since 2020-05-04
-	 * @author jminban
+	 * 관리자용 update
 	 * 
+	 * @since 2020-05-06
 	 * @param userVO
-	 * @param auth
+	 * @param authList
 	 * @return
-	 * 
-	 * 마이페이지에서 유저정보 업데이트 수행
 	 */
 	@Transactional
 	public int update(UserDetailsVO userVO, String[] authList) {
 		// TODO 유저 정보 업데이트
 		
-		Authentication oldAuth = SecurityContextHolder.getContext().getAuthentication();
-		
-		UserDetailsVO oldUserVO = (UserDetailsVO) oldAuth.getPrincipal();
-		
-		log.debug("서비스 업데이트 유저 정보 : " + userVO.getEmail());
-		oldUserVO.setEmail(userVO.getEmail());
-		oldUserVO.setPhone(userVO.getPhone());
-		oldUserVO.setAddress(userVO.getAddress());
-		
 		int ret = userDao.update(userVO);
 		
+		// DB update가 성공하면
+		// 로그인된 session 정보를 update 수행한다.
 		if(ret > 0) {
 			List<AuthorityVO> authCollection = new ArrayList<AuthorityVO>();
 			for(String auth : authList) {
@@ -155,16 +145,44 @@ public class UserService {
 			// 새로운 권한들 생성
 			authDao.insert(authCollection);
 			
-			// Dao 만들어주기
+		}
+		
+		return ret;
+	}
+	/**
+	 * @since 2020-05-04
+	 * @author jminban
+	 * 
+	 * @param userVO
+	 * @param auth
+	 * @return
+	 * 
+	 * 마이페이지에서 유저정보 업데이트 수행
+	 */
+	@Transactional
+	public int update(UserDetailsVO userVO) {
+		// TODO 유저 정보 업데이트
+		
+		Authentication oldAuth = SecurityContextHolder.getContext().getAuthentication();
+		
+		UserDetailsVO oldUserVO = (UserDetailsVO) oldAuth.getPrincipal();
+		
+		oldUserVO.setEmail(userVO.getEmail());
+		oldUserVO.setPhone(userVO.getPhone());
+		oldUserVO.setAddress(userVO.getAddress());
+		
+		int ret = userDao.update(oldUserVO);
+		
+		if(ret > 0) {
 			
-			// 새로운 session 정보를 만들때는 oldUserVO로 세팅하기
-			Authentication newAuth = new UsernamePasswordAuthenticationToken(oldUserVO, //변경된 사용자 정보
-					oldAuth.getCredentials(),
-					this.getAuthorities(authList)//변경된 ROLE 정보
-					);
-			// get으로 뽑아낸 것중에 credential만 new Auth로 바꾸고 context로 세팅해주기
+			// 새로운 session 정보를 만들 때 oldUserVO로 세팅을 한다.
+			Authentication newAuth = new UsernamePasswordAuthenticationToken(oldUserVO, // 변경된 사용자 정보 
+							oldAuth.getCredentials(),
+							oldAuth.getAuthorities()// 변경된 ROLE 정보
+							);
+			
+			// get으로 뽑아낸것 중에 credential만 new Auth로 바꾸고 context에 세팅해주기
 			SecurityContextHolder.getContext().setAuthentication(newAuth);
-			
 		}
 		
 		return ret;

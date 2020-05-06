@@ -93,7 +93,6 @@ public class UserController {
 		 * 코드는 쉬워지나 보안에 치명적인 문제를 일으킬 수 있다.
 		 * 
 		 */
-		log.debug("업데이트 : " + userVO.getEmail());
 		int ret = uService.update(userVO, auth);
 		
 		return "redirect:/user/mypage";
