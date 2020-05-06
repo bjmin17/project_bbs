@@ -21,6 +21,8 @@ import com.biz.bbs.domain.UserDetailsVO;
 import com.biz.bbs.persistence.AuthoritiesDao;
 import com.biz.bbs.persistence.UserDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 회원정보 CRUD 서비스
  * 
@@ -29,6 +31,7 @@ import com.biz.bbs.persistence.UserDao;
  * @author jminban
  *
  */
+@Slf4j
 @Service
 //@RequiredArgsConstructor
 public class UserService {
@@ -128,6 +131,7 @@ public class UserService {
 		
 		UserDetailsVO oldUserVO = (UserDetailsVO) oldAuth.getPrincipal();
 		
+		log.debug("서비스 업데이트 유저 정보 : " + userVO.getEmail());
 		oldUserVO.setEmail(userVO.getEmail());
 		oldUserVO.setPhone(userVO.getPhone());
 		oldUserVO.setAddress(userVO.getAddress());
@@ -197,6 +201,26 @@ public class UserService {
 										.getPrincipal();
 		
 		return passwordEncoder.matches(password, userVO.getPassword());
+	}
+
+
+	/**
+	 * 회원리스트 보기
+	 * 
+	 * @since 2020-05-06
+	 * @return
+	 */
+	@Transactional
+	public List<UserDetailsVO> selectAll() {
+		// TODO 회원리스트 보기
+		return userDao.selectAll();
+	}
+
+
+
+	public UserDetailsVO findByUserName(String username) {
+		// TODO 이름으로 회원정보 찾는 메서드
+		return userDao.findByUserName(username);
 	}
 	
 	

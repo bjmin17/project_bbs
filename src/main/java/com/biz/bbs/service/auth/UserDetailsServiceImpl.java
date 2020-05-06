@@ -60,9 +60,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		userDetailsVO.setAccountNonLocked(true);
 		userDetailsVO.setCredentialsNonExpired(true);
 		
-		userDetailsVO.setEmail("aaa@abc.com");
-		userDetailsVO.setPhone("010-1221-3432");
-		userDetailsVO.setAddress("광주광역시");
+//		userDetailsVO.setEmail("aaa@abc.com");
+//		userDetailsVO.setPhone("010-1221-3432");
+//		userDetailsVO.setAddress("광주광역시");
 		
 		
 		userDetailsVO.setAuthorities(this.getAuthorities(username));

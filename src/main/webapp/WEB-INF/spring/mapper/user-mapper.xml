@@ -5,6 +5,51 @@
   
  <mapper namespace="com.biz.bbs.persistence.UserDao">
  
+ 	<select id="findByUserName" resultMap="userAndAuthorities">
+ 		SELECT id,
+ 				user_id AS username,
+ 				user_pass AS password,
+ 				enabled,
+ 				email, phone, address
+ 				FROM tbl_users WHERE user_id = #{username}
+ 	</select>
+ 
+ 	<select id="selectAll" resultMap="userAndAuthorities">
+ 		SELECT user_id AS username,
+ 				user_pass AS password,
+ 				email, phone, address
+ 		FROM tbl_users
+ 	</select>
+ 
+ 	<resultMap type="userDetailsVO" id="userAndAuthorities">
+ 		<id column="id" property="id"/>
+ 		<result property="username" column="username"/>
+ 		<collection 
+ 				property="authorities"
+ 				column="username"
+ 				ofType="authorityVO"
+ 				select="findByUserNameAuthorities"
+ 				/>
+ 	</resultMap>
+ 
+ 
+ 	<select id="findById" resultMap="userAndAuthorities">
+ 		SELECT
+ 			user_id AS username,
+ 			user_pass AS password,
+ 			enabled,
+ 			email,
+ 			phone,
+ 			address
+ 			
+ 		FROM tbl_users WHERE id = #{id}
+ 	</select>
+ 
+ 	<select id="findByUserNameAuthorities" resultType="authorityVO">
+ 		SELECT * FROM authorities
+ 		WHERE username = #{username}
+ 	</select>
+ 
 	<select id="create_table">
 		${create_table}
 	</select> 	

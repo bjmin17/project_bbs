@@ -77,7 +77,7 @@ public class UserController {
 		userVO.setAuthorities(upa.getAuthorities());
 		
 		model.addAttribute("userVO",userVO);
-		return "auth/user_view";
+		return "auth/mypage";
 	}
 	
 	@RequestMapping(value="/mypage",method=RequestMethod.POST)
@@ -93,6 +93,7 @@ public class UserController {
 		 * 코드는 쉬워지나 보안에 치명적인 문제를 일으킬 수 있다.
 		 * 
 		 */
+		log.debug("업데이트 : " + userVO.getEmail());
 		int ret = uService.update(userVO, auth);
 		
 		return "redirect:/user/mypage";
