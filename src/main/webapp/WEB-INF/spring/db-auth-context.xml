@@ -35,5 +35,12 @@
 		<property name="username" value="${mysql.username}"/>
 		<property name="password" value="${mysql.password}"/>
 	</bean>
+
+	<!-- 트랜잭션 관리자 활성화 -->
+	<tx:annotation-driven/>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="authDB"/>
+	</bean>
 	
 </beans>

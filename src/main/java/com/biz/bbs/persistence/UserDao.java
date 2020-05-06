@@ -24,7 +24,7 @@ public interface UserDao {
 	
 	public UserDetailsVO findByUserName(String username);
 	
-	public int insert(Map<String, String> userMap);
+	public int insert(UserDetailsVO userVO);
 	
 	public UserDetailsVO findById(Long id);
 	

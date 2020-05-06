@@ -118,7 +118,7 @@
 				font-size: 0.3rem;
 			}
 		</style>
-		<form:form method="POST" action="${rootPath}/join/join_next" modelAttribute="userVO">
+		<form:form method="POST" action="${rootPath}/user/join" modelAttribute="userVO">
 			<div class="container p-3 my-3 bg-primary text-white">
 				<h2>회원가입</h2>
 			</div>

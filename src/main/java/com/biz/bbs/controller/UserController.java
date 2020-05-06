@@ -37,6 +37,22 @@ public class UserController {
 		return "auth/login";
 	}
 	
+	@RequestMapping(value = "/join",method = RequestMethod.GET)
+	public String join() {
+		return "auth/join";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/join",method=RequestMethod.POST,
+						produces = "text/html;charset=UTF-8")
+	public String join(String username, String password) {
+		
+		log.debug("아이디 {}, 비번 {}", username, password);
+		uService.insert(username, password);
+		
+		return String.format("아이디 : <b>%s</b>, 비밀번호 : <b>%s</b>", username, password);
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/idcheck",method=RequestMethod.GET)
 	public String idcheck(String username) {

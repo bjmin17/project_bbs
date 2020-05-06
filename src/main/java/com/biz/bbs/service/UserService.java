@@ -92,13 +92,23 @@ public class UserService {
 	public int insert(String username, String password) {
 		
 		String encPassword = passwordEncoder.encode(password);
-		Map<String,String> userVO = new HashMap<String,String>();
 		
-		userVO.put("username", username);
-		userVO.put("password", encPassword);
-		
+		UserDetailsVO userVO = UserDetailsVO.builder()
+							.username(username)
+							.password(encPassword).build();
 		
 		int ret = userDao.insert(userVO);
+		
+		List<AuthorityVO> authList = new ArrayList();
+		authList.add(AuthorityVO.builder()
+							.username(userVO.getUsername())
+							.authority("ROLE_USER").build());
+		authList.add(AuthorityVO.builder()
+							.username(userVO.getUsername())
+							.authority("USER").build());
+
+		authDao.insert(authList);
+		
 		return ret;
 	}
 
