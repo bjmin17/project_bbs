@@ -74,10 +74,10 @@
 		<fieldset>
 			<form:form method="POST" modelAttribute="bbsVO">
 				<div class="form-group">
-					<input id="b_subject" name="b_subject" class="form-control" placeholder="제목" value="${BBS.b_subject}">
+					<input id="b_subject" name="b_subject" class="form-control" placeholder="제목" value="${bbsVO.b_subject}">
 				</div>
 				<div class="form-group summer">
-					<textarea id="b_text" name="b_text" rows="20" cols="100" >${BBS.b_content}</textarea>
+					<textarea id="b_text" name="b_text" rows="20" cols="100" >${bbsVO.b_text}</textarea>
 				</div>
 				<div class="form-group d-flex justify-content-end">
 					<button type="button" class="btn btn-primary btn-save mr-2">저장</button>

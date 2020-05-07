@@ -23,5 +23,15 @@
 					)
 					
 	</insert> 
+	
+	<update id="update">
+		UPDATE `secure`.`tbl_bbs`
+				SET
+				`B_SUBJECT` = #{b_subject},
+				`B_TEXT` = #{b_text}
+				
+				WHERE `B_ID` = #{b_id}
+		
+	</update>
  
  </mapper> 

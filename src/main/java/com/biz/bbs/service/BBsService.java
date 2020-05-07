@@ -47,5 +47,20 @@ public class BBsService {
 		return bDao.insert(bbsVO);
 	}
 
+	public BBsVO findById(String b_id) {
+		// TODO findById
+		return bDao.findById(b_id);
+	}
+
+	public int delete(String b_id) {
+		// TODO delete
+		return bDao.delete(b_id);
+	}
+
+	public int update(BBsVO bbsVO) {
+		// TODO update
+		return bDao.update(bbsVO);
+	}
+
 	
 }

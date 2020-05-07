@@ -5,6 +5,16 @@
 <html>
 <head>
 <%@ include file = "/WEB-INF/views/include/include-head.jspf" %>
+<script>
+$(function(){
+	$(".bbs_view").click(function(){
+		let id = $(this).attr("data-id")
+		// alert(id)
+		document.location.href = "${rootPath}/board/detail?b_id=" + id
+	})
+})
+
+</script>
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/include/include-nav.jspf" %>
