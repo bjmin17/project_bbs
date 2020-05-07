@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.biz.bbs.persistence.BBsDao">
+ 
+	
+	<insert id="insert">
+	
+		INSERT INTO `secure`.`tbl_bbs`(
+					`B_WRITER`,
+					`B_DATE`,
+					`B_TIME`,
+					`B_SUBJECT`,
+					`B_TEXT`
+				) VALUES (
+					#{b_writer},
+					#{b_date},
+					#{b_time},
+					#{b_subject},
+					#{b_text}
+					)
+					
+	</insert> 
+ 
+ </mapper> 

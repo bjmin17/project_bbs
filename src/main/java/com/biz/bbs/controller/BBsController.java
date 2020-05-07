@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RequiredArgsConstructor
-@RequestMapping(value="/bbs")
+@RequestMapping(value="/board")
 @Controller
 @Slf4j
 public class BBsController {
@@ -30,11 +30,23 @@ public class BBsController {
 	private final BBsService bService;
 	
 	@RequestMapping(value="",method=RequestMethod.GET)
-	public String bbs(Model model) {
+	public String board(Model model) {
 		
 		List<BBsVO> bbsList = bService.selectAll();
 		model.addAttribute("BBS_LIST", bbsList);
 		
 		return "bbs/bbs_main";
+	}
+	
+	@RequestMapping(value="/insert",method=RequestMethod.GET)
+	public String insert() {
+		
+		return "bbs/insert";
+	}
+	
+	@RequestMapping(value = "/insert",method=RequestMethod.POST)
+	public String insert(BBsVO bbsVO) {
+		int ret = bService.insert(bbsVO);
+		return "redirect:/board";
 	}
 }

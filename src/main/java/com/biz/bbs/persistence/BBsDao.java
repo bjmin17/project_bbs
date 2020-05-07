@@ -11,4 +11,6 @@ public interface BBsDao {
 	@Select(" SELECT * FROM tbl_bbs ")
 	public List<BBsVO> selectAll();
 
+	public int insert(BBsVO bbsVO);
+
 }

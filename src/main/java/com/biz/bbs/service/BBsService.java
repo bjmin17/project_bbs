@@ -1,5 +1,8 @@
 package com.biz.bbs.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,6 +29,22 @@ public class BBsService {
 	public List<BBsVO> selectAll() {
 		// TODO selectAll
 		return bDao.selectAll();
+	}
+
+	public int insert(BBsVO bbsVO) {
+		// TODO insert
+		
+		LocalDate ld = LocalDate.now();  // 날짜 구하기 2020-05-07
+		bbsVO.setB_date(ld.toString());
+		
+		LocalTime lt = LocalTime.now();  // 시간 구하기 23:23:31.071
+		String slt = lt.toString();
+		String sublt = slt.substring(0,8);
+		bbsVO.setB_time(sublt);
+
+		bbsVO.setB_writer("jminban");
+		
+		return bDao.insert(bbsVO);
 	}
 
 	

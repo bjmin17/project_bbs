@@ -55,7 +55,7 @@
 			</table>
 		</article>
 		<article>
-			<button class="btn btn-primary">등록</button>
+			<a href="${rootPath}/board/insert"><button class="btn btn-primary">등록</button></a>
 		</article>
 	</section>
 </body>
