@@ -81,6 +81,9 @@ public class CommentService {
 	}
 	
 	public int insert(CommentVO commentVO) {
+		
+//		commentVO.setC_writer(loginUsername);
+		
 		if(commentVO.getC_id() > 0) {
 			int ret = cmtDao.update(commentVO);
 			return ret;

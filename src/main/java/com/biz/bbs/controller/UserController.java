@@ -42,7 +42,7 @@ public class UserController {
 		return "auth/join";
 	}
 	
-	@ResponseBody
+//	@ResponseBody
 	@RequestMapping(value = "/join",method=RequestMethod.POST,
 						produces = "text/html;charset=UTF-8")
 	public String join(String username, String password) {
@@ -50,7 +50,8 @@ public class UserController {
 		log.debug("아이디 {}, 비번 {}", username, password);
 		uService.insert(username, password);
 		
-		return String.format("아이디 : <b>%s</b>, 비밀번호 : <b>%s</b>", username, password);
+//		return String.format("아이디 : <b>%s</b>, 비밀번호 : <b>%s</b>", username, password);
+		return "redirect:/";
 	}
 	
 	@ResponseBody

@@ -44,12 +44,24 @@ $(function(){
 		
 		let txt = $(this).text()
 		if(txt == '수정'){
-			alert("수정")
+			//alert("수정")
 			document.location.href="${rootPath}/board/update?b_id=${bbsVO.b_id}"
+					
 		} else if(txt == '삭제') {
 			if(confirm("삭제할까요?")) {
-				alert(txt)
-				document.location.replace("${rootPath}/board/delete?b_id=${bbsVO.b_id}")
+				//document.location.replace("${rootPath}/board/delete?b_id=${bbsVO.b_id}")
+				$.ajax({
+					url : "${rootPath}/board/delete",
+					data : {b_id : "${BBS.b_id}"},
+					type : "GET",
+					success : function(result){
+						alert("삭제 성공")
+						//document.location.replace("${rootPath}/board/delete?b_id=${bbsVO.b_id}")
+					},
+					error : function() {
+						alert("삭제 불가")
+					}
+				})
 			}
 		} else if(txt == '저장') {
 			var formData = $("form.repl").serialize()
@@ -58,7 +70,7 @@ $(function(){
 					data : formData,
 					type : "POST",
 					success : function(result){
-						alert("댓글 저장 성공")
+						//alert("댓글 저장 성공")
 						//$(".modal-main").css("display","none")
 						$("div.cmt-list").html(result)
 					},
@@ -69,7 +81,8 @@ $(function(){
 				
 				
 			})
-			
+		} else if(txt == '목록으로') {
+			document.location.href="${rootPath}/board"
 		}
 		
 	})
@@ -107,14 +120,14 @@ $(function(){
 				<div class="col-2">
 					<input name="c_id" id="c_id" class="form-control" type="hidden" value="0">
 					<input name="c_b_id" class="form-control" type="hidden" value="${bbsVO.b_id}">
-					<input name="c_writer" id="c_writer" class="form-control" placeholder="작성자">
+					<input name="c_writer" id="c_writer" class="form-control" placeholder="작성자" value="${loginUsername}" readonly="readonly">
 				</div>
 				<div class="col-8">
 					<input name="c_subject" id="c_subject" class="form-control" placeholder="댓글을 입력하세요">
 				</div>
 				<div class="col-2 d-flex justify-content-start">
 					<button type="button" class="btn btn-primary mr-2 commentInsert btn-cmt-save">저장</button>
-					<a href="${rootPath}/"><button type="button" class="btn btn-success">목록으로</button></a>
+					<button type="button" class="btn btn-success">목록으로</button>
 				</div>
 			</div>	
 		</form:form>
@@ -123,10 +136,11 @@ $(function(){
 			<%@ include file="/WEB-INF/views/comment/comment_list.jsp" %>
 		</div>
 	</article>
-	
-	<button class="btn btn-warning btn-save">수정</button>
-	<button class="btn btn-danger btn-delete">삭제</button>
-	<a href="${rootPath}/board"><button type="button" class="btn btn-success">목록으로</button></a>
+	<div align="right" class="mb-5">
+		<button class="btn btn-warning btn-save">수정</button>
+		<button class="btn btn-danger btn-delete">삭제</button>
+		<button type="button" class="btn btn-success">목록으로</button>
+	</div>
 </section>
 </body>
 </html>

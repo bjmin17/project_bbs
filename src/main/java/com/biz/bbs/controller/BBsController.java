@@ -1,7 +1,9 @@
 package com.biz.bbs.controller;
 
+import java.security.Principal;
 import java.util.List;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.biz.bbs.domain.BBsVO;
 import com.biz.bbs.domain.CommentVO;
 import com.biz.bbs.domain.PageVO;
+import com.biz.bbs.domain.UserDetailsVO;
 import com.biz.bbs.service.BBsService;
 import com.biz.bbs.service.CommentService;
 import com.biz.bbs.service.PageService;
@@ -61,21 +64,32 @@ public class BBsController {
 	
 	@RequestMapping(value="/insert",method=RequestMethod.GET)
 	public String insert() {
-		
 		return "bbs/insert";
 	}
 	
 	@RequestMapping(value = "/insert",method=RequestMethod.POST)
-	public String insert(BBsVO bbsVO) {
-		int ret = bService.insert(bbsVO);
+	public String insert(Principal principal, BBsVO bbsVO) {
+		
+		UserDetailsVO userVO = this.loginUserInfo(principal);
+		
+		log.debug("유저VO : " + userVO.toString());
+		
+		String loginUsername = userVO.getUsername();
+		
+		int ret = bService.insert(bbsVO,loginUsername);
 		return "redirect:/board";
 	}
 	
 	@RequestMapping(value = "/detail",method=RequestMethod.GET)
-	public String detail(@RequestParam("b_id") String b_id, Model model) {
+	public String detail(Principal principal, @RequestParam("b_id") String b_id, Model model) {
+		
+		UserDetailsVO userVO = this.loginUserInfo(principal);
+		
+		String loginUsername = userVO.getUsername();
+		model.addAttribute("loginUsername",loginUsername);		
 		
 		long c_b_id = Long.valueOf(b_id);
-		this.commentList(c_b_id+"", model);
+		this.commentList(c_b_id + "", model);
 		
 		BBsVO bbsVO = bService.findById(b_id);
 		
@@ -103,11 +117,21 @@ public class BBsController {
 	}
 	
 	@RequestMapping(value = "/delete",method=RequestMethod.GET)
-	public String delete(@RequestParam("b_id") String b_id) {
+	public String delete(Principal principal, @RequestParam("b_id") String b_id, Model model) {
 		
-		int ret = bService.delete(b_id);
+		UserDetailsVO userVO = this.loginUserInfo(principal);
+		String loginUsername = userVO.getUsername();
 		
-		return "redirect:/board";
+		int ret = bService.delete(b_id,userVO);
+		
+//		model.addAttribute("b_id",b_id);
+		
+		if(ret > 0) {
+			return "redirect:/board/detail";
+		} else {
+			return "redirect:/board/detail";
+		}
+		
 	}
 	
 	/*
@@ -121,6 +145,18 @@ public class BBsController {
 		
 		return commentList;
 	}
-	
+
+	/*
+	 * 로그인 중인 유저 정보 얻기
+	 */
+	private UserDetailsVO loginUserInfo(Principal principal) {
+		// 사용자정보 뽑아오는 방법
+		// principal을 가져와서 토큰으로 가져온 후, getPrincipal로 정보 가져오기
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+		
+		return userVO;
+	}
 }
 

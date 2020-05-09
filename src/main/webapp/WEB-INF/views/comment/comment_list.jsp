@@ -6,8 +6,8 @@
 <c:forEach var="COMMENT" items="${COMMENT}">
 	<div class="row p-4 cmt-item" data-id="${COMMENT.c_id}">
 		<div class="col-2 m-1 writer"><b>${COMMENT.c_writer}</b></div>
-		<div class="col-7 m-1 subject">${COMMENT.c_subject}</div>
-		<div class="col-1 cmt-item-repl"><b>답변</b></div>
+		<div class="col-6 m-1 subject">${COMMENT.c_subject}</div>
+		<div class="col-2 cmt-item-repl"><b>${COMMENT.c_date_time}</b></div>
 		<div class="col-1 cmt-item-del"><b>&times;</b></div>
 		
 	</div>
