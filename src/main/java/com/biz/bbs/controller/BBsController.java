@@ -51,8 +51,8 @@ public class BBsController {
 		PageVO pageVO = pService.getPagination(totalCount,currentPageNo);
 		log.debug("페이지 VO : " + pageVO.toString());
 		
-//		List<BBsVO> bbsList = bService.selectAllPagination(pageVO);
-		List<BBsVO> bbsList = bService.selectAll();
+		List<BBsVO> bbsList = bService.selectAllPagination(pageVO);
+//		List<BBsVO> bbsList = bService.selectAll();
 		
 		
 		model.addAttribute("BBS_LIST", bbsList);
@@ -83,6 +83,7 @@ public class BBsController {
 	@RequestMapping(value = "/detail",method=RequestMethod.GET)
 	public String detail(Principal principal, @RequestParam("b_id") String b_id, Model model) {
 		
+//		log.debug("로그 principal 값 : " + principal.toString());
 		UserDetailsVO userVO = this.loginUserInfo(principal);
 		
 		String loginUsername = userVO.getUsername();
@@ -119,6 +120,8 @@ public class BBsController {
 	@RequestMapping(value = "/delete",method=RequestMethod.GET)
 	public String delete(Principal principal, @RequestParam("b_id") String b_id, Model model) {
 		
+		log.debug("컨트롤러 delete id 값 : "+ b_id);
+		
 		UserDetailsVO userVO = this.loginUserInfo(principal);
 		String loginUsername = userVO.getUsername();
 		
@@ -127,7 +130,7 @@ public class BBsController {
 //		model.addAttribute("b_id",b_id);
 		
 		if(ret > 0) {
-			return "redirect:/board/detail";
+			return "redirect:/board";
 		} else {
 			return "redirect:/board/detail";
 		}
@@ -152,7 +155,10 @@ public class BBsController {
 	private UserDetailsVO loginUserInfo(Principal principal) {
 		// 사용자정보 뽑아오는 방법
 		// principal을 가져와서 토큰으로 가져온 후, getPrincipal로 정보 가져오기
+		
+		log.debug("비로그인 시 principal : " + principal.toString());
 		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		
 		
 		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
 		

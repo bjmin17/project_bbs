@@ -52,7 +52,7 @@ $(function(){
 				//document.location.replace("${rootPath}/board/delete?b_id=${bbsVO.b_id}")
 				$.ajax({
 					url : "${rootPath}/board/delete",
-					data : {b_id : "${BBS.b_id}"},
+					data : {b_id : "${bbsVO.b_id}"},
 					type : "GET",
 					success : function(result){
 						alert("삭제 성공")
@@ -81,7 +81,7 @@ $(function(){
 				
 				
 			})
-		} else if(txt == '목록으로') {
+		} else if(txt == '목록') {
 			document.location.href="${rootPath}/board"
 		}
 		
@@ -104,7 +104,7 @@ $(function(){
 		<span>${bbsVO.b_date}</span>
 		<span>${bbsVO.b_time}</span>
 		<span>추천 0 </span>
-		<span>조회 ${bbsVO.b_count}</span>
+		<span>조회 <i class="far fa-eye"></i> ${bbsVO.b_count}</span>
 		<hr/>
 	</article>
 	<article>
@@ -127,7 +127,7 @@ $(function(){
 				</div>
 				<div class="col-2 d-flex justify-content-start">
 					<button type="button" class="btn btn-primary mr-2 commentInsert btn-cmt-save">저장</button>
-					<button type="button" class="btn btn-success">목록으로</button>
+					<button type="button" class="btn btn-success"><i class="fas fa-list"></i>목록</button>
 				</div>
 			</div>	
 		</form:form>
@@ -137,9 +137,11 @@ $(function(){
 		</div>
 	</article>
 	<div align="right" class="mb-5">
-		<button class="btn btn-warning btn-save">수정</button>
-		<button class="btn btn-danger btn-delete">삭제</button>
-		<button type="button" class="btn btn-success">목록으로</button>
+		<c:if test="${bbsVO.b_writer == loginUsername || loginUsername == 'admin'}">
+			<button class="btn btn-warning btn-save"><i class="fas fa-edit"></i>수정</button>
+			<button class="btn btn-danger btn-delete"><i class="fas fa-trash-alt"></i>삭제</button>
+		</c:if>
+		<button type="button" class="btn btn-success"><i class="fas fa-list"></i>목록</button>
 	</div>
 </section>
 </body>

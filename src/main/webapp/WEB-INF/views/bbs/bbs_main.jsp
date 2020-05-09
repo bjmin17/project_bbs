@@ -72,7 +72,7 @@ $(function(){
 		</article>
 		<article>
 			<div align="right">
-				<a href="${rootPath}/board/insert"><button class="btn btn-primary mb-3 ">등록</button></a>
+				<a href="${rootPath}/board/insert"><button class="btn btn-primary mb-3 "><i class="fas fa-pen"></i>등록</button></a>
 			</div>
 		</article>
 		<div class="pagination">

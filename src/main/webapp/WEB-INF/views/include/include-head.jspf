@@ -18,6 +18,7 @@
 <!-- include summernote-ko-KR -->
 <script src="${rootPath}/js/summernote-ko-KR.js"></script>
 
+<!-- 폰트 사용 -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
 <style>
 	*{
@@ -25,3 +26,5 @@
 	}
 </style>
 
+<!-- 폰트어썸 -->
+<script defer src="${rootPath}/js/all.js"></script>

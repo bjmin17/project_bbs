@@ -11,7 +11,7 @@ import com.biz.bbs.domain.PageVO;
 
 public interface BBsDao {
 
-	@Select(" SELECT * FROM tbl_bbs ")
+	@Select(" SELECT * FROM tbl_bbs ORDER BY b_date DESC ")
 	public List<BBsVO> selectAll();
 
 	public int insert(BBsVO bbsVO);
