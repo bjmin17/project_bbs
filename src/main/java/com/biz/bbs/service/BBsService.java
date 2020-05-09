@@ -1,13 +1,13 @@
 package com.biz.bbs.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.domain.PageVO;
 import com.biz.bbs.persistence.BBsDao;
 
 import lombok.RequiredArgsConstructor;
@@ -60,6 +60,16 @@ public class BBsService {
 	public int update(BBsVO bbsVO) {
 		// TODO update
 		return bDao.update(bbsVO);
+	}
+
+	public long totalCount() {
+		// TODO totalCount
+		return bDao.totalCount();
+	}
+
+	public List<BBsVO> selectAllPagination(PageVO pageVO) {
+		// TODO selectAllPagination
+		return bDao.selectAllPagination(pageVO);
 	}
 
 	

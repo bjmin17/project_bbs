@@ -15,13 +15,27 @@ $(function(){
 })
 
 </script>
+<style>
+.article_table {
+	height: 560px;
+}
+
+.bbs_view {
+	cursor: pointer;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+}
+</style>
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/include/include-nav.jspf" %>
 	<h2>bbs 페이지</h2>
 	<hr/>
 	<section>
-		<article>
+		<article class="article_table">
 			<table class="table table-hover">
 				<c:choose>
 					<c:when test="${not empty bbsList}">
@@ -41,14 +55,6 @@ $(function(){
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-								<td>1</td>
-							</tr>
 							<c:forEach items="${BBS_LIST}" var="BBS" varStatus="i">
 							<tr class="bbs_view" data-id="${BBS.b_id}">
 								<td>${i.count}</td>
@@ -65,8 +71,13 @@ $(function(){
 			</table>
 		</article>
 		<article>
-			<a href="${rootPath}/board/insert"><button class="btn btn-primary">등록</button></a>
+			<div align="right">
+				<a href="${rootPath}/board/insert"><button class="btn btn-primary mb-3 ">등록</button></a>
+			</div>
 		</article>
+		<div class="pagination">
+			<%@ include file="/WEB-INF/views/include/include-pagination.jspf" %>
+		</div>
 	</section>
 </body>
 </html>

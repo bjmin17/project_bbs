@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.domain.CommentVO;
+import com.biz.bbs.domain.PageVO;
 import com.biz.bbs.service.BBsService;
+import com.biz.bbs.service.CommentService;
+import com.biz.bbs.service.PageService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,12 +33,28 @@ import lombok.extern.slf4j.Slf4j;
 public class BBsController {
 
 	private final BBsService bService;
+	private final PageService pService;
+	private final CommentService cService;
 	
 	@RequestMapping(value="",method=RequestMethod.GET)
-	public String board(Model model) {
+	public String boardList(
+			@RequestParam(value = "currentPageNo",required = false, 
+				defaultValue = "1") int currentPageNo,
+			Model model) {
 		
+		long totalCount = 0;
+		totalCount = bService.totalCount();
+		
+		PageVO pageVO = pService.getPagination(totalCount,currentPageNo);
+		log.debug("페이지 VO : " + pageVO.toString());
+		
+//		List<BBsVO> bbsList = bService.selectAllPagination(pageVO);
 		List<BBsVO> bbsList = bService.selectAll();
+		
+		
 		model.addAttribute("BBS_LIST", bbsList);
+		model.addAttribute("pageVO",pageVO);
+		
 		
 		return "bbs/bbs_main";
 	}
@@ -52,7 +72,10 @@ public class BBsController {
 	}
 	
 	@RequestMapping(value = "/detail",method=RequestMethod.GET)
-	public String view(@RequestParam("b_id") String b_id, Model model) {
+	public String detail(@RequestParam("b_id") String b_id, Model model) {
+		
+		long c_b_id = Long.valueOf(b_id);
+		this.commentList(c_b_id+"", model);
 		
 		BBsVO bbsVO = bService.findById(b_id);
 		
@@ -86,4 +109,18 @@ public class BBsController {
 		
 		return "redirect:/board";
 	}
+	
+	/*
+	 * 게시판의 id값을 받아서
+	 * 댓글 리스트를 보여주는 메서드
+	 */
+	private List<CommentVO> commentList(String b_id, Model model){
+
+		List<CommentVO> commentList = cService.findByBId(Long.valueOf(b_id));
+		model.addAttribute("COMMENT", commentList);
+		
+		return commentList;
+	}
+	
 }
+

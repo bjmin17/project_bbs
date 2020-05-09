@@ -6,6 +6,34 @@
  <mapper namespace="com.biz.bbs.persistence.BBsDao">
  
 	
+	<select id="selectAllPagination" resultType="pageVO">
+		<!-- SELECT * 
+		FROM (
+			SELECT /*+ FRIST_ROWS_100 */ROWNUM AS NUM, IP.* 
+			FROM 
+			( SELECT /*+ INDEX_DESC(P) */ * 
+				FROM tbl_bbs B ) IP
+			WHERE ROWNUM &lt;= #{pageVO.limit}
+		) TBL
+		WHERE NUM &gt;= #{pageVO.offset}
+		 -->
+		
+		<!-- 
+		SELECT TBL.*
+		FROM(
+			SELECT * 
+			FROM tbl_bbs order by b_id
+		) TBL
+		LIMIT 10 OFFSET 0
+		 -->
+		SELECT `b_id`, `b_p_id`, `b_writer`, `b_date`, `b_time`, `b_subject`, `b_text`, `b_count`
+		FROM `tbl_bbs`
+		LIMIT #{pageVO.offset}, #{pageVO.limit}
+			
+		
+		
+	</select>
+	
 	<insert id="insert">
 	
 		INSERT INTO `secure`.`tbl_bbs`(

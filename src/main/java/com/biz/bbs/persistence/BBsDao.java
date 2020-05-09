@@ -3,9 +3,11 @@ package com.biz.bbs.persistence;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.domain.PageVO;
 
 public interface BBsDao {
 
@@ -21,5 +23,10 @@ public interface BBsDao {
 	public int delete(String b_id);
 
 	public int update(BBsVO bbsVO);
+
+	@Select(" SELECT count(*) FROM tbl_bbs")
+	public long totalCount();
+
+	public List<BBsVO> selectAllPagination(@Param("pageVO") PageVO pageVO);
 
 }
