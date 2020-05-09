@@ -132,7 +132,8 @@ public class BBsController {
 		if(ret > 0) {
 			return "redirect:/board";
 		} else {
-			return "redirect:/board/detail";
+//			return "redirect:/board/detail";
+			return null;
 		}
 		
 	}

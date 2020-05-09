@@ -12,6 +12,13 @@ $(function(){
 		// alert(id)
 		document.location.href = "${rootPath}/board/detail?b_id=" + id
 	})
+	
+	//$("#search_button").click(function(){
+	$(document).on("click","#search_button",function(){
+		
+		let search = $("#search_input")
+		alert(search)
+	})
 })
 
 </script>
@@ -35,6 +42,28 @@ $(function(){
 	<h2>bbs 페이지</h2>
 	<hr/>
 	<section>
+		<div class="input-group mt-3 mb-3">
+		  <div class="input-group-prepend">
+		    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
+		      Dropdown button
+		    </button>
+		    <div class="dropdown-menu">
+		      <a class="dropdown-item" href="#">Link 1</a>
+		      <a class="dropdown-item" href="#">Link 2</a>
+		      <a class="dropdown-item" href="#">Link 3</a>
+		    </div>
+		  </div>
+		  <input type="text" class="form-control" placeholder="Username">
+		</div>
+		<form >
+		  	<select name="kategorie" class="news_button">
+			    <option value="allList" selected="selected">전체</option>
+			    <option value="title">제목</option>
+			    <option value="content">내용</option>
+			</select>
+			<input name="search" id="search_input">
+			<button class="search_button" id="search_button">검색</button>
+		</form>
 		<article class="article_table">
 			<table class="table table-hover">
 				<c:choose>

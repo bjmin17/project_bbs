@@ -29,7 +29,7 @@
 		SELECT *
 		FROM `tbl_bbs`
 		ORDER BY b_id DESC
-		LIMIT #{pageVO.offset}, #{pageVO.limit}
+		LIMIT #{pageVO.offset}, 10
 			
 		
 		
