@@ -29,4 +29,27 @@ public interface BBsDao {
 
 	public List<BBsVO> selectAllPagination(@Param("pageVO") PageVO pageVO);
 
+	// 컨트롤러에서 시작한 검색 페이징
+	@Select("SELECT * FROM tbl_bbs WHERE b_subject LIKE CONCAT('%', #{search}, '%') or b_text LIKE CONCAT('%', #{search}, '%') ORDER BY b_date DESC LIMIT #{pageVO.offset}, 10")
+	public List<BBsVO> selectAllListPagination(@Param("pageVO") PageVO pageVO, @Param("search") String search);
+	
+	@Select("SELECT count(*) FROM tbl_bbs WHERE b_subject LIKE CONCAT('%', #{search}, '%') or b_text LIKE CONCAT('%', #{search}, '%') ")
+	public long searchAllListCount(String search);
+
+	// 컨트롤러에서 시작한 검색 페이징
+	@Select("SELECT * FROM tbl_bbs WHERE b_subject LIKE CONCAT('%', #{search}, '%') ORDER BY b_date DESC LIMIT #{pageVO.offset}, 10")
+	public List<BBsVO> selectTitle(@Param("pageVO") PageVO pageVO, @Param("search") String search);
+	
+	@Select("SELECT count(*) FROM tbl_bbs WHERE b_subject LIKE CONCAT('%', #{search}, '%') ")
+	public long searchSubjectCount(String search);
+	
+	// 컨트롤러에서 시작한 검색 페이징
+	@Select("SELECT * FROM tbl_bbs WHERE b_text LIKE CONCAT('%', #{search}, '%') ORDER BY b_date DESC LIMIT #{pageVO.offset}, 10")
+	public List<BBsVO> selectContent(@Param("pageVO") PageVO pageVO, @Param("search") String search);
+
+	@Select("SELECT count(*) FROM tbl_bbs WHERE b_text LIKE CONCAT('%', #{search}, '%') ")
+	public long searchTextCount(String search);
+
+
+
 }

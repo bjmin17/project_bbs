@@ -132,17 +132,18 @@ $(function(){
 			</div>	
 		</form:form>
 		<hr/>
+		<div align="right" class="mb-5">
+			<c:if test="${bbsVO.b_writer == loginUsername || loginUsername == 'admin'}">
+				<button class="btn btn-warning btn-save"><i class="fas fa-edit"></i>수정</button>
+				<button class="btn btn-danger btn-delete"><i class="fas fa-trash-alt"></i>삭제</button>
+			</c:if>
+			<button type="button" class="btn btn-success"><i class="fas fa-list"></i>목록</button>
+		</div>
+		<hr/>		
 		<div class="p-4 cmt-list">
 			<%@ include file="/WEB-INF/views/comment/comment_list.jsp" %>
 		</div>
 	</article>
-	<div align="right" class="mb-5">
-		<c:if test="${bbsVO.b_writer == loginUsername || loginUsername == 'admin'}">
-			<button class="btn btn-warning btn-save"><i class="fas fa-edit"></i>수정</button>
-			<button class="btn btn-danger btn-delete"><i class="fas fa-trash-alt"></i>삭제</button>
-		</c:if>
-		<button type="button" class="btn btn-success"><i class="fas fa-list"></i>목록</button>
-	</div>
 </section>
 </body>
 </html>

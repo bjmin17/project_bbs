@@ -35,7 +35,7 @@ $(function(){
 		      <a class="nav-link" href="${rootPath}/">Home</a>
 		    </li>
 		    <li class="nav-item">
-		      <a class="nav-link" href="${rootPath}/board">게시판</a>
+		      <a class="nav-link" href="${rootPath}/board?currentPageNo=${pageNo}&search=${search}&kategorie=${kategorie}">게시판</a>
 		    </li>
 		    <li class="nav-item">
 		      <a class="nav-link disabled" href="#">Disabled</a>

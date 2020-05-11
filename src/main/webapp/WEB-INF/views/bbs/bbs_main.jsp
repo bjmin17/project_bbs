@@ -12,13 +12,18 @@ $(function(){
 		// alert(id)
 		document.location.href = "${rootPath}/board/detail?b_id=" + id
 	})
-	
+	/*
 	//$("#search_button").click(function(){
 	$(document).on("click","#search_button",function(){
 		
 		let search = $("#search_input")
 		alert(search)
 	})
+	*/
+	$(".btn-insert ").click(function(){
+		document.location.href = "${rootPath}/board/insert"	
+	})
+	
 })
 
 </script>
@@ -55,7 +60,8 @@ $(function(){
 		  </div>
 		  <input type="text" class="form-control" placeholder="Username">
 		</div>
-		<form >
+		<form action="${rootPath}/board" method="GET">
+			<!-- <input type="text" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
 		  	<select name="kategorie" class="news_button">
 			    <option value="allList" selected="selected">전체</option>
 			    <option value="title">제목</option>
@@ -101,7 +107,7 @@ $(function(){
 		</article>
 		<article>
 			<div align="right">
-				<a href="${rootPath}/board/insert"><button class="btn btn-primary mb-3 "><i class="fas fa-pen"></i>등록</button></a>
+				<a href="${rootPath}/board/insert"><button type="button" class="btn btn-primary btn-insert mb-3"><i class="fas fa-pen"></i>등록</button></a>
 			</div>
 		</article>
 		<div class="pagination">

@@ -1,6 +1,7 @@
 package com.biz.bbs.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,19 +44,65 @@ public class BBsController {
 	public String boardList(
 			@RequestParam(value = "currentPageNo",required = false, 
 				defaultValue = "1") int currentPageNo,
+			String kategorie, String search,
 			Model model) {
 		
+		
+		List<BBsVO> bbsList1 = new ArrayList<BBsVO>();
+		PageVO pageVO = new PageVO();
 		long totalCount = 0;
 		totalCount = bService.totalCount();
 		
-		PageVO pageVO = pService.getPagination(totalCount,currentPageNo);
+		log.debug("컨트롤러 카테고리 : "+kategorie);
+		log.debug("컨트롤러 검색어 : " +search);
+		
+		if(kategorie.equalsIgnoreCase("allList")) {
+			// 전체(allList)일 때 작동할거 만들어주기
+			totalCount = bService.searchAllListCount(search);
+			log.debug("토탈카운트 : " + totalCount);
+			pageVO = pService.getPagination(totalCount,currentPageNo);
+			bbsList1 = bService.selectAllListPagination(pageVO, search);
+			
+		} else if(kategorie.equalsIgnoreCase("title")) {
+			// 제목으로만 검색했을 때
+			totalCount = bService.searchSubjectCount(search);
+			pageVO = pService.getPagination(totalCount,1);
+			
+			bbsList1 = bService.selectTitle(pageVO, search);
+//			return bbsSearchList;
+		} else if(kategorie.equalsIgnoreCase("content")) {
+			// 내용으로 검색했을 때
+			totalCount = bService.searchAllListCount(search);
+			pageVO = pService.getPagination(totalCount,1);
+			
+			bbsList1 = bService.selectContent(pageVO, search);
+//			return bbsSearchList;
+		} else if(search.trim() == "" || search.isEmpty()) {
+			
+			bbsList1 = bService.selectAllPagination(pageVO);
+//			return bbsSearchList;
+		} else {
+			bbsList1 = bService.selectAllPagination(pageVO);
+		}
+//		PageVO pageVO = pService.getPagination(totalCount,currentPageNo);
 		log.debug("페이지 VO : " + pageVO.toString());
 		
-		List<BBsVO> bbsList = bService.selectAllPagination(pageVO);
+		// 세이브포인트
+//		List<BBsVO> bbsList1 = bService.selectSearchPagination(pageVO, kategorie, search, currentPageNo);
+		log.debug("리스트 개수 : "+bbsList1.size());
+//		pageVO = pService.getPagination(bbsList1.size(), currentPageNo);
+//		log.debug("검색 후 페이징 : " + bbsList1.toString());
+		model.addAttribute("BBS_LIST", bbsList1);
+		
+//		List<BBsVO> bbsList = bService.selectAllPagination(pageVO);
+//		model.addAttribute("BBS_LIST", bbsList);
 //		List<BBsVO> bbsList = bService.selectAll();
 		
 		
-		model.addAttribute("BBS_LIST", bbsList);
+		// 검색을 위해 값 넘겨주기
+		model.addAttribute("kategorie", kategorie);
+		model.addAttribute("search",search);
+		
 		model.addAttribute("pageVO",pageVO);
 		
 		
@@ -77,7 +124,7 @@ public class BBsController {
 		String loginUsername = userVO.getUsername();
 		
 		int ret = bService.insert(bbsVO,loginUsername);
-		return "redirect:/board";
+		return "redirect:/board?currentPageNo=&search=&kategorie=";
 	}
 	
 	@RequestMapping(value = "/detail",method=RequestMethod.GET)
@@ -114,7 +161,7 @@ public class BBsController {
 		
 		int ret = bService.update(bbsVO);
 		
-		return "redirect:/board";
+		return "redirect:/board?currentPageNo=&search=&kategorie=";
 	}
 	
 	@RequestMapping(value = "/delete",method=RequestMethod.GET)
@@ -130,7 +177,7 @@ public class BBsController {
 //		model.addAttribute("b_id",b_id);
 		
 		if(ret > 0) {
-			return "redirect:/board";
+			return "redirect:/board?currentPageNo=&search=&kategorie=";
 		} else {
 //			return "redirect:/board/detail";
 			return null;

@@ -31,7 +31,18 @@
 		ORDER BY b_id DESC
 		LIMIT #{pageVO.offset}, 10
 			
-		
+	</select>
+	
+	<select id="selectAllSearch" resultType="bbsVO">
+		SELECT *
+		FROM `tbl_bbs`
+		WHERE b_subject LIKE CONCAT('%',#{search},'%') or b_text LIKE CONCAT('%',#{search},'%')
+		<!-- 
+		WHERE `b_subject` LIKE CONCAT('%', #{search}, '%') or `b_text` LIKE CONCAT('%', #{search}, '%')
+		 -->
+		<!-- offset,Limit 넣어줘서 페이징할 차례 -->
+		<!-- LIMIT 1, 10 -->
+		LIMIT #{pageSearchVO.offset}, 10
 		
 	</select>
 	

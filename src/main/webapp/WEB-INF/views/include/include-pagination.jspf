@@ -7,8 +7,8 @@
 		<ul class="pagination">
 		
 			<c:if test="${pageVO.startPageNo > 1}">
-				<li class="page-item"><a href="${rootPath}/board?currentPageNo=1&search=${search}" class="page-link">&laquo;</a></li>
-				<li class="page-item"><a href="${rootPath}/board?currentPageNo=${pageVO.prePageNo}&search=${search}" class="page-link">&lt;</a></li>
+				<li class="page-item"><a href="${rootPath}/board?currentPageNo=1&search=${search}&kategorie=${kategorie}" class="page-link">&laquo;</a></li>
+				<li class="page-item"><a href="${rootPath}/board?currentPageNo=${pageVO.prePageNo}&search=${search}&kategorie=${kategorie}" class="page-link">&lt;</a></li>
 			</c:if>
 			
 			<c:if test="${pageVO.startPageNo > 2}">
@@ -16,13 +16,13 @@
 			</c:if>
 			
 			<c:forEach begin="${pageVO.startPageNo}" end="${pageVO.endPageNo}" var="pageNo">
-				<li class="page-item <c:if test="${pageNo == pageVO.currentPageNo}">active</c:if>"><a href="${rootPath}/board?currentPageNo=${pageNo}&search=${search}" class="page-link">${pageNo}</a></li>
+				<li class="page-item <c:if test="${pageNo == pageVO.currentPageNo}">active</c:if>"><a href="${rootPath}/board?currentPageNo=${pageNo}&search=${search}&kategorie=${kategorie}" class="page-link">${pageNo}</a></li>
 			</c:forEach>
 			
 			<c:if test="${pageVO.endPageNo != pageVO.finalPageNo}">
 				<li class="page-item"><a class="page-link">&middot;&middot;&middot;</a></li>
-				<li class="page-item"><a href="${rootPath}/board?currentPageNo=${pageVO.nextPageNo}&search=${search}" class="page-link">&gt;</a></li>
-				<li class="page-item"><a href="${rootPath}/board?currentPageNo=${pageVO.finalPageNo}&search=${search}" class="page-link">&raquo;</a></li>
+				<li class="page-item"><a href="${rootPath}/board?currentPageNo=${pageVO.nextPageNo}&search=${search}&kategorie=${kategorie}" class="page-link">&gt;</a></li>
+				<li class="page-item"><a href="${rootPath}/board?currentPageNo=${pageVO.finalPageNo}&search=${search}&kategorie=${kategorie}" class="page-link">&raquo;</a></li>
 			</c:if>
 		</ul>
 	</div>
