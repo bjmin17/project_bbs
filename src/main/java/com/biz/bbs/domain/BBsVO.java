@@ -22,5 +22,6 @@ public class BBsVO {
 	private String b_time;//	varchar(10)	not null	,
 	private String b_subject;//	varchar(125)	not null	,
 	private String b_text;//	varchar(1000)	not null	,
-	private String b_count;//	bigint	default 0
+	private long b_count;//	bigint	default 0
+	private long b_recommend;
 }

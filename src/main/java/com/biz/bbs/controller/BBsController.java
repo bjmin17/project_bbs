@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biz.bbs.domain.BBsVO;
 import com.biz.bbs.domain.CommentVO;
@@ -47,7 +48,6 @@ public class BBsController {
 			String kategorie, String search,
 			Model model) {
 		
-		
 		List<BBsVO> bbsList1 = new ArrayList<BBsVO>();
 		PageVO pageVO = new PageVO();
 		long totalCount = 0;
@@ -84,27 +84,17 @@ public class BBsController {
 		} else {
 			bbsList1 = bService.selectAllPagination(pageVO);
 		}
-//		PageVO pageVO = pService.getPagination(totalCount,currentPageNo);
-		log.debug("페이지 VO : " + pageVO.toString());
-		
-		// 세이브포인트
-//		List<BBsVO> bbsList1 = bService.selectSearchPagination(pageVO, kategorie, search, currentPageNo);
-		log.debug("리스트 개수 : "+bbsList1.size());
 //		pageVO = pService.getPagination(bbsList1.size(), currentPageNo);
-//		log.debug("검색 후 페이징 : " + bbsList1.toString());
 		model.addAttribute("BBS_LIST", bbsList1);
 		
 //		List<BBsVO> bbsList = bService.selectAllPagination(pageVO);
-//		model.addAttribute("BBS_LIST", bbsList);
 //		List<BBsVO> bbsList = bService.selectAll();
-		
 		
 		// 검색을 위해 값 넘겨주기
 		model.addAttribute("kategorie", kategorie);
 		model.addAttribute("search",search);
 		
 		model.addAttribute("pageVO",pageVO);
-		
 		
 		return "bbs/bbs_main";
 	}
@@ -185,6 +175,29 @@ public class BBsController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/recommend_up",method=RequestMethod.POST)
+	public String recommend_up(Principal principal, @RequestParam("b_id") String b_id) {
+		
+		UserDetailsVO userVO = this.loginUserInfo(principal);
+		String loginUsername = userVO.getUsername();
+		int ret = bService.recommend_up(b_id, loginUsername);
+		
+		return "컨트롤러 연결";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/recommend_id_check",method=RequestMethod.GET)
+	public String recommendIdCheck(Principal principal, @RequestParam("b_id") String b_id) {
+		
+		UserDetailsVO userVO = this.loginUserInfo(principal);
+		String loginUsername = userVO.getUsername();
+		
+		int ret = bService.recommend_id_check(loginUsername, b_id);
+		
+		return "";
+	}
+	
 	/*
 	 * 게시판의 id값을 받아서
 	 * 댓글 리스트를 보여주는 메서드
@@ -212,5 +225,7 @@ public class BBsController {
 		
 		return userVO;
 	}
+	
+	
 }
 

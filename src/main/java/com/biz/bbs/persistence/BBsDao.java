@@ -50,6 +50,8 @@ public interface BBsDao {
 	@Select("SELECT count(*) FROM tbl_bbs WHERE b_text LIKE CONCAT('%', #{search}, '%') ")
 	public long searchTextCount(String search);
 
+	public void insertRecommend(@Param("b_id")String b_id, @Param("loginUsername")String loginUsername);
+
 
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.biz.bbs.domain.CommentVO;
+import com.biz.bbs.domain.UserDetailsVO;
 import com.biz.bbs.persistence.CommentDao;
 
 import lombok.RequiredArgsConstructor;
@@ -100,6 +101,12 @@ public class CommentService {
 	public int delete(long c_id) {
 		return cmtDao.delete(c_id);
 		
+	}
+	
+	// 추천 업
+	public int recommend_up(Long valueOf, UserDetailsVO userVO) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

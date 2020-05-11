@@ -64,11 +64,24 @@
 					
 	</insert> 
 	
+	<insert id="insertRecommend">
+		INSERT INTO `secure`.`tbl_b_recommend`
+					(
+					`b_r_username`,
+					`b_r_board_id`)
+					VALUES
+					(
+					#{loginUsername},
+					#{b_id})
+		
+	</insert>
+	
 	<update id="update">
 		UPDATE `secure`.`tbl_bbs`
 				SET
 				`B_SUBJECT` = #{b_subject},
-				`B_TEXT` = #{b_text}
+				`B_TEXT` = #{b_text},
+				`B_RECOMMEND` = #{b_recommend}
 				
 				WHERE `B_ID` = #{b_id}
 		

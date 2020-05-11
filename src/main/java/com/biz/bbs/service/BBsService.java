@@ -125,57 +125,17 @@ public class BBsService {
 		// TODO Auto-generated method stub
 		return bDao.selectContent(pageVO, search);
 	}
-/*
-	// 카테고리, 검색어를 받아서 해당하는 리스트를 페이징하며 보여주기
-	public List<BBsVO> selectSearchPagination(PageVO pageVO, String kategorie, String search, int currentPageNo) {
-		// TODO 검색어 받아서 리스트 페이징처리
-		
-		log.debug("서비스 카테고리 : "+kategorie);
-		log.debug("서비스 검색어 : " +search);
-		
-		
-		List<BBsVO> bbsSearchList ; 
-		
-		String kategorieTemp = "";
-		kategorieTemp = kategorie;
-		
-		long totalCount = 0;
-		
-		if(kategorieTemp.equalsIgnoreCase("allList")) {
-			// 전체(allList)일 때 작동할거 만들어주기
-			totalCount = this.searchAllListCount(search);
-			log.debug("토탈카운트 : " + totalCount);
-			PageVO pageSearchVO = pService.getPagination(totalCount,currentPageNo);
-			log.debug("서비스 PageVO. offset 값 : " + pageVO.getOffset());
-//			log.debug("서버ㅣ스 페이지VO : "+pageVO.toString());
-			bbsSearchList = bDao.selectAllSearch(pageSearchVO, search);
-			log.debug("서비스 검색 후 페이징 : " + bbsSearchList);
-//			return bbsSearchList;
-		} else if(kategorieTemp.equalsIgnoreCase("title")) {
-			// 제목으로만 검색했을 때
-			totalCount = this.searchAllListCount(search);
-			PageVO pageSearchVO = pService.getPagination(totalCount,1);
-			
-			bbsSearchList = bDao.selectTitle(pageSearchVO, search);
-//			return bbsSearchList;
-		} else if(kategorieTemp.equalsIgnoreCase("content")) {
-			// 내용으로 검색했을 때
-			totalCount = this.searchAllListCount(search);
-			PageVO pageSearchVO = pService.getPagination(totalCount,1);
-			
-			bbsSearchList = bDao.selectContent(pageSearchVO, search);
-//			return bbsSearchList;
-		} else if(search.trim() == "" || search.isEmpty()) {
-			
-			bbsSearchList = this.selectAllPagination(pageVO);
-//			return bbsSearchList;
-		} else {
-			bbsSearchList = this.selectAllPagination(pageVO);
-//			return bbsSearchList;
-		}
-		return bbsSearchList;
-		
-	}
-*/
 	
+	// 추천
+	public int recommend_up(String b_id, String loginUsername) {
+		// TODO 추천 메서드 recommend_up
+		
+		BBsVO bbsVO = bDao.findById(b_id);
+		bbsVO.setB_recommend(bbsVO.getB_recommend()+1);
+		
+		bDao.insertRecommend(b_id, loginUsername);
+		int ret = bDao.update(bbsVO);
+		
+		return 0;
+	}
 }

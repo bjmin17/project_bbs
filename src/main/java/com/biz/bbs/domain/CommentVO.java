@@ -21,4 +21,5 @@ public class CommentVO {
 	private String c_date_time;//	VARCHAR2(30)
 	private String c_writer;//	nVARCHAR2(30)
 	private String c_subject;//	nVARCHAR2(125)
+	private long c_recommend;
 }
