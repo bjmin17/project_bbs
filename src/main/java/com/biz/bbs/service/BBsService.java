@@ -150,18 +150,37 @@ public class BBsService {
 		BBsVO bbsVO = bDao.findById(b_id);
 		bbsVO.setB_recommend(bbsVO.getB_recommend()+1);
 		
-		BRecommendVO b_recommend  = new BRecommendVO();
-		b_recommend = bDao.findRecommendById(loginUsername);
+//		BRecommendVO b_recommend  = new BRecommendVO();
+		BRecommendVO b_recommend = bDao.findRecommendById(loginUsername);
 		// 추천을 하려면 추천 테이블
-		if(b_recommend != null 
-				&& b_recommend.getB_r_username().equals(loginUsername) 
-				&& b_recommend.getB_r_board_id().equals(b_id) ) {
-			return false;
-		} else {
-			bDao.insertRecommend(b_id, loginUsername);
-			int ret = bDao.update(bbsVO);
-			return true;
+		// 값이 하나도 없으면 (null 이면) true;
+		// 값이 있는데(!= null)
+		//		이전에 username과 b_id가 똑같은게 있다면 return false;
+		//		두개 다 똑같은게 없다면 return true;
+		if(b_recommend != null) {
+			if(b_recommend.getB_r_username().equals(loginUsername) && 
+				b_recommend.getB_r_board_id().equals(b_id)) return false;
+			else {
+				return true;
+			}
 			
+		} else {
+			return true;
 		}
+	}
+
+	public int recommend_down(String b_id, String loginUsername) {
+		// TODO Auto-generated method stub
+		BBsVO bbsVO = bDao.findById(b_id);
+		bbsVO.setB_recommend(bbsVO.getB_recommend()-1);
+
+		int ret = 0;
+		boolean booleanRet = this.recommend_id_check(loginUsername, b_id);
+		if(booleanRet) {
+			bDao.insertRecommend(b_id, loginUsername);
+			ret = bDao.update(bbsVO);
+		}
+		
+		return ret;
 	}
 }

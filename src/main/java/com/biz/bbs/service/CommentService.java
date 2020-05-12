@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.domain.BRecommendVO;
+import com.biz.bbs.domain.CRecommendVO;
 import com.biz.bbs.domain.CommentVO;
-import com.biz.bbs.domain.UserDetailsVO;
 import com.biz.bbs.persistence.CommentDao;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class CommentService {
 		return null;
 	}
 	
-	public CommentVO findById(long c_id) {
+	public CommentVO findById(String c_id) {
 		CommentVO cmtVO = cmtDao.findById(c_id);
 		return cmtVO;
 	}
@@ -104,9 +106,66 @@ public class CommentService {
 	}
 	
 	// 추천 업
-	public int recommend_up(Long valueOf, UserDetailsVO userVO) {
+	public int recommend_up(String c_id, String loginUsername) {
 		// TODO Auto-generated method stub
-		return 0;
+		
+		CommentVO cmtVO = cmtDao.findById(c_id);
+		cmtVO.setC_recommend(cmtVO.getC_recommend()+1);
+
+		int ret = 0;
+		boolean booleanRet = this.recommend_id_check(loginUsername, c_id);
+		if(booleanRet) {
+			cmtDao.insertRecommend(c_id, loginUsername);
+			
+			ret = cmtDao.update(cmtVO);
+		}
+		
+		return ret;
+		
 	}
+	
+	// 비추천 메서드
+	public int recommend_down(String c_id, String loginUsername) {
+		// TODO Auto-generated method stub
+		
+		CommentVO cmtVO = cmtDao.findById(c_id);
+		cmtVO.setC_recommend(cmtVO.getC_recommend()-1);
+		
+		int ret = 0;
+		boolean booleanRet = this.recommend_id_check(loginUsername, c_id);
+		if(booleanRet) {
+			cmtDao.insertRecommend(c_id, loginUsername);
+			
+			ret = cmtDao.update(cmtVO);
+		}
+		
+		return ret;
+	}
+	
+	// 추천 중복 조회 메서드
+	private boolean recommend_id_check(String loginUsername, String c_id) {
+		// TODO Auto-generated method stub
+		
+		CommentVO cmtVO = cmtDao.findById(c_id);
+		cmtVO.setC_recommend(cmtVO.getC_recommend()+1);
+		
+//		CRecommendVO c_recommend  = new CRecommendVO();
+		CRecommendVO c_recommend = cmtDao.findRecommendById(loginUsername);
+		// 추천을 하려면 추천 테이블
+		// 값이 하나도 없으면 (null 이면) true;
+		// 값이 있는데(!= null)
+		//		이전에 username과 b_id가 똑같은게 있다면 return false;
+		//		두개 다 똑같은게 없다면 return true;
+		if(c_recommend != null) {
+			if(c_recommend.getC_r_username().equals(loginUsername) && 
+					c_recommend.getC_r_board_id().equals(c_id)) return false;
+			else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
 	
 }

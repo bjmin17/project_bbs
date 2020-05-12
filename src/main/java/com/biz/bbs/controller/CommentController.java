@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biz.bbs.domain.CommentVO;
 import com.biz.bbs.domain.UserDetailsVO;
@@ -87,6 +88,31 @@ public class CommentController {
 		return "redirect:/comment/list";
 	}
 	
+	// 추천 기능
+	@ResponseBody
+	@RequestMapping(value = "/recommend_up",method=RequestMethod.POST)
+	public String recommend_up(Principal principal, @RequestParam("c_id") String c_id) {
+		
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+		
+		String loginUsername = userVO.getUsername();
+		int ret = cmtService.recommend_up(c_id, loginUsername);
+		
+		return ret+"";
+	}
 	
-	
+	// 비추천 기능
+	@ResponseBody
+	@RequestMapping(value = "/recommend_down",method=RequestMethod.POST)
+	public String recommend_down(Principal principal, @RequestParam("c_id") String c_id) {
+		
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+		
+		String loginUsername = userVO.getUsername();
+		int ret = cmtService.recommend_down(c_id, loginUsername);
+		
+		return ret+"";
+	}
 }

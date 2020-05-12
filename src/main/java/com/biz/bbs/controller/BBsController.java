@@ -107,7 +107,9 @@ public class BBsController {
 	@RequestMapping(value = "/insert",method=RequestMethod.POST)
 	public String insert(Principal principal, BBsVO bbsVO) {
 		
-		UserDetailsVO userVO = this.loginUserInfo(principal);
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+//		UserDetailsVO userVO = this.loginUserInfo(principal);
 		
 		log.debug("유저VO : " + userVO.toString());
 		
@@ -121,7 +123,9 @@ public class BBsController {
 	public String detail(Principal principal, @RequestParam("b_id") String b_id, Model model) {
 		
 //		log.debug("로그 principal 값 : " + principal.toString());
-		UserDetailsVO userVO = this.loginUserInfo(principal);
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+//		UserDetailsVO userVO = this.loginUserInfo(principal);
 		
 		String loginUsername = userVO.getUsername();
 		model.addAttribute("loginUsername",loginUsername);		
@@ -159,7 +163,9 @@ public class BBsController {
 		
 		log.debug("컨트롤러 delete id 값 : "+ b_id);
 		
-		UserDetailsVO userVO = this.loginUserInfo(principal);
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+//		UserDetailsVO userVO = this.loginUserInfo(principal);
 		String loginUsername = userVO.getUsername();
 		
 		int ret = bService.delete(b_id,userVO);
@@ -179,27 +185,27 @@ public class BBsController {
 	@RequestMapping(value = "/recommend_up",method=RequestMethod.POST)
 	public String recommend_up(Principal principal, @RequestParam("b_id") String b_id) {
 		
-		UserDetailsVO userVO = this.loginUserInfo(principal);
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+//		UserDetailsVO userVO = this.loginUserInfo(principal);
 		String loginUsername = userVO.getUsername();
 		int ret = bService.recommend_up(b_id, loginUsername);
 		
 		return ret+"";
 	}
 	
-	/*
 	@ResponseBody
-	@RequestMapping(value="/recommend_id_check",method=RequestMethod.GET)
-	public String recommendIdCheck(Principal principal, @RequestParam("b_id") String b_id) {
+	@RequestMapping(value = "/recommend_down",method=RequestMethod.POST)
+	public String recommend_down(Principal principal, @RequestParam("b_id") String b_id) {
 		
-		UserDetailsVO userVO = this.loginUserInfo(principal);
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+//		UserDetailsVO userVO = this.loginUserInfo(principal);
 		String loginUsername = userVO.getUsername();
+		int ret = bService.recommend_down(b_id, loginUsername);
 		
-		boolean ret = bService.recommend_id_check(loginUsername, b_id);
-		if(ret) return "OK";
-		
-		return "NO";
+		return ret+"";
 	}
-	*/
 	
 	/*
 	 * 게시판의 id값을 받아서
@@ -220,7 +226,7 @@ public class BBsController {
 		// 사용자정보 뽑아오는 방법
 		// principal을 가져와서 토큰으로 가져온 후, getPrincipal로 정보 가져오기
 		
-		log.debug("비로그인 시 principal : " + principal.toString());
+//		log.debug("비로그인 시 principal : " + principal.toString());
 		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
 		
 		

@@ -113,6 +113,32 @@ $(function(){
 		})
 	})
 	
+	$("#ftd").click(function(){
+		
+		id = ${bbsVO.b_id}
+		//alert(${bbsVO.b_id})
+		alert(id)
+		$.ajax({
+					url : "${rootPath}/board/recommend_down",
+					data : {
+						b_id : ${bbsVO.b_id},
+						"${_csrf.parameterName}" : "${_csrf.token}"
+						},
+					type : "POST",
+					success : function(result){
+						if(result < 1){
+							alert("이미 추천했습니다.")
+						} else {
+							alert("추천 성공")
+							document.location.replace("${rootPath}/board/detail?b_id=${bbsVO.b_id}")
+						}
+					},
+					error : function() {
+						alert("추천 불가")
+					}
+		})
+	})
+	
 })
 </script>
 <style>

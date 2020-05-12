@@ -30,20 +30,42 @@ $(function(){
 						},
 					type : "POST",
 					success : function(result){
-						alert("추천 성공")
-						//document.location.replace("${rootPath}/board/delete?b_id=${bbsVO.b_id}")
+						if(result < 1){
+							alert("이미 추천했습니다.")
+						} else {
+							alert("추천 성공")
+							document.location.replace("${rootPath}/board/detail?b_id=${bbsVO.b_id}")
+						}
 					},
 					error : function() {
 						alert("추천 불가")
 					}
 				})
 	})
-	/*
-	$(document).click("click",".fa-thumbs-up",function(){
+	
+	$(".ftd").click(function(){
 		let id = $(this).data("id")
 		alert(id)
+		$.ajax({
+					url : "${rootPath}/comment/recommend_down",
+					data : {
+						c_id : id,
+						"${_csrf.parameterName}" : "${_csrf.token}"
+						},
+					type : "POST",
+					success : function(result){
+						if(result < 1){
+							alert("이미 추천했습니다.")
+						} else {
+							alert("추천 성공")
+							document.location.replace("${rootPath}/board/detail?b_id=${bbsVO.b_id}")
+						}
+					},
+					error : function() {
+						alert("추천 불가")
+					}
+				})
 	})
-	*/
 })
 </script>
 <div class="row p-4 cmt-item">
@@ -67,7 +89,7 @@ $(function(){
 				<p>
 				<span>${COMMENT.c_recommend}</span>
 				<p>
-				<i class="far fa-thumbs-down"></i>
+				<p class="ftd" data-id="${COMMENT.c_id}"><i class="far fa-thumbs-down"></i></p>
 			</div>
 			<div class="row cmt cmt-item" data-id="${COMMENT.c_id}">
 				<div class="col-2 mt-1 ml-1 mb-1 writer">

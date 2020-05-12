@@ -3,8 +3,10 @@ package com.biz.bbs.persistence;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import com.biz.bbs.domain.CRecommendVO;
 import com.biz.bbs.domain.CommentVO;
 
 public interface CommentDao {
@@ -13,7 +15,7 @@ public interface CommentDao {
 	public List<CommentVO> selectAll();
 	
 	@Select(" SELECT * FROM tbl_comment WHERE c_id = #{c_id}")
-	public CommentVO findById(long c_id);
+	public CommentVO findById(String c_id);
 
 	/*
 	 * 게시판 원글에 달린 코멘트들만 추출하기
@@ -37,5 +39,11 @@ public interface CommentDao {
 
 	@Delete("DELETE FROm tbl_comment WHERE c_id = #{c_id}")
 	public int delete(long c_id);
+
+	// 댓글 추천수 중복 조회 위한 메서드
+	@Select("SELECT * FROM tbl_c_recommend WHERE c_r_username = #{loginUsername}")
+	public CRecommendVO findRecommendById(String loginUsername);
+
+	public void insertRecommend(@Param("c_id")String c_id, @Param("loginUsername") String loginUsername);
 
 }

@@ -25,11 +25,24 @@
 
 	</insert>
 	
+	<insert id="insertRecommend">
+		INSERT INTO `secure`.`tbl_c_recommend`
+					(
+					`c_r_username`,
+					`c_r_board_id`)
+					VALUES
+					(
+					#{loginUsername},
+					#{c_id})
+					
+	</insert>
+	
 	<update id="update" parameterType="CommentVO">
 		UPDATE `secure`.`tbl_comment`
 					SET
 					`c_writer` = #{c_writer},
-					`c_subject` = #{c_subject}
+					`c_subject` = #{c_subject},
+					`C_RECOMMEND` = #{c_recommend}
 					
 					WHERE `c_id` = #{c_id};
 			
