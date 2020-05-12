@@ -88,7 +88,10 @@ $(function(){
 	})
 	
 	$("#ftu").click(function(){
-		alert(${bbsVO.b_id})
+		
+		id = ${bbsVO.b_id}
+		//alert(${bbsVO.b_id})
+		alert(id)
 		$.ajax({
 					url : "${rootPath}/board/recommend_up",
 					data : {
@@ -97,8 +100,12 @@ $(function(){
 						},
 					type : "POST",
 					success : function(result){
-						alert("추천 성공")
-						document.location.replace("${rootPath}/board/detail?b_id=${bbsVO.b_id}")
+						if(result < 1){
+							alert("이미 추천했습니다.")
+						} else {
+							alert("추천 성공")
+							document.location.replace("${rootPath}/board/detail?b_id=${bbsVO.b_id}")
+						}
 					},
 					error : function() {
 						alert("추천 불가")

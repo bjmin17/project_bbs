@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.domain.BRecommendVO;
 import com.biz.bbs.domain.PageVO;
 
 public interface BBsDao {
@@ -50,7 +51,13 @@ public interface BBsDao {
 	@Select("SELECT count(*) FROM tbl_bbs WHERE b_text LIKE CONCAT('%', #{search}, '%') ")
 	public long searchTextCount(String search);
 
+	/*
+	 * 추천 중복 방지 테이블 DB 조회용
+	 */
 	public void insertRecommend(@Param("b_id")String b_id, @Param("loginUsername")String loginUsername);
+
+	@Select("SELECT * FROM tbl_b_recommend WHERE b_r_username = #{loginUsername}")
+	public BRecommendVO findRecommendById(String loginUsername);
 
 
 

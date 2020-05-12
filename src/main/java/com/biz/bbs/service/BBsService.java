@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import com.biz.bbs.domain.BBsVO;
+import com.biz.bbs.domain.BRecommendVO;
 import com.biz.bbs.domain.PageVO;
 import com.biz.bbs.domain.UserDetailsVO;
 import com.biz.bbs.persistence.BBsDao;
@@ -132,10 +131,37 @@ public class BBsService {
 		
 		BBsVO bbsVO = bDao.findById(b_id);
 		bbsVO.setB_recommend(bbsVO.getB_recommend()+1);
+
+		int ret = 0;
+		boolean booleanRet = this.recommend_id_check(loginUsername, b_id);
+		if(booleanRet) {
+			bDao.insertRecommend(b_id, loginUsername);
+			ret = bDao.update(bbsVO);
+		}
 		
-		bDao.insertRecommend(b_id, loginUsername);
-		int ret = bDao.update(bbsVO);
+		return ret;
+	}
+
+	private boolean recommend_id_check(String loginUsername, String b_id) {
+		// TODO Auto-generated method stub
 		
-		return 0;
+		log.debug("추천 아이디 체크 : " + loginUsername);
+		
+		BBsVO bbsVO = bDao.findById(b_id);
+		bbsVO.setB_recommend(bbsVO.getB_recommend()+1);
+		
+		BRecommendVO b_recommend  = new BRecommendVO();
+		b_recommend = bDao.findRecommendById(loginUsername);
+		// 추천을 하려면 추천 테이블
+		if(b_recommend != null 
+				&& b_recommend.getB_r_username().equals(loginUsername) 
+				&& b_recommend.getB_r_board_id().equals(b_id) ) {
+			return false;
+		} else {
+			bDao.insertRecommend(b_id, loginUsername);
+			int ret = bDao.update(bbsVO);
+			return true;
+			
+		}
 	}
 }

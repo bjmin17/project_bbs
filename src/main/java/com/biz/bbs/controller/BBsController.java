@@ -183,9 +183,10 @@ public class BBsController {
 		String loginUsername = userVO.getUsername();
 		int ret = bService.recommend_up(b_id, loginUsername);
 		
-		return "컨트롤러 연결";
+		return ret+"";
 	}
 	
+	/*
 	@ResponseBody
 	@RequestMapping(value="/recommend_id_check",method=RequestMethod.GET)
 	public String recommendIdCheck(Principal principal, @RequestParam("b_id") String b_id) {
@@ -193,10 +194,12 @@ public class BBsController {
 		UserDetailsVO userVO = this.loginUserInfo(principal);
 		String loginUsername = userVO.getUsername();
 		
-		int ret = bService.recommend_id_check(loginUsername, b_id);
+		boolean ret = bService.recommend_id_check(loginUsername, b_id);
+		if(ret) return "OK";
 		
-		return "";
+		return "NO";
 	}
+	*/
 	
 	/*
 	 * 게시판의 id값을 받아서
