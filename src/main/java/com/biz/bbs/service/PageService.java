@@ -56,7 +56,8 @@ public class PageService {
 		// DB에서 데이터 가져오기 값 설정
 		// 1, 2, 3 페이지를 선택했을 때
 		// 시작번호를 1, 11, 21로 설정하기
-		int offset = (currentPageNo - 1) * listPerPage + 1;
+		int offset = (currentPageNo - 1) * listPerPage;
+//		int offset = (currentPageNo - 1) * listPerPage + 1;
 		
 		// 10, 20, 30으로 설정하기
 		int limit = offset + listPerPage - 1;

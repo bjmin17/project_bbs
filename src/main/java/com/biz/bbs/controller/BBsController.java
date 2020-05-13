@@ -69,19 +69,19 @@ public class BBsController {
 			pageVO = pService.getPagination(totalCount,1);
 			
 			bbsList1 = bService.selectTitle(pageVO, search);
-//			return bbsSearchList;
 		} else if(kategorie.equalsIgnoreCase("content")) {
 			// 내용으로 검색했을 때
 			totalCount = bService.searchAllListCount(search);
 			pageVO = pService.getPagination(totalCount,1);
 			
 			bbsList1 = bService.selectContent(pageVO, search);
-//			return bbsSearchList;
 		} else if(search.trim() == "" || search.isEmpty()) {
-			
+			totalCount = bService.totalCount();
+			pageVO = pService.getPagination(totalCount, currentPageNo);
 			bbsList1 = bService.selectAllPagination(pageVO);
-//			return bbsSearchList;
 		} else {
+			totalCount = bService.totalCount();
+			pageVO = pService.getPagination(totalCount, currentPageNo);
 			bbsList1 = bService.selectAllPagination(pageVO);
 		}
 //		pageVO = pService.getPagination(bbsList1.size(), currentPageNo);

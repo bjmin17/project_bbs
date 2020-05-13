@@ -11,7 +11,8 @@ $(function(){
 	
 	// let c_id = $(this).closet("div").data("id")
 	// 가장 인접한 곳(closet)에 있는 div를 찾아서 거기 있는 id를 가져오라
-	$(document).on("click","div.cmt-item-del",function(event){
+	//$(document).on("click","div.cmt-item-del",function(event){
+	$("div.cmt-item-del").click(function(){	
 		
 		// 나를 감싸고 있는 곳으로 이벤트가 전파되는 것을
 		// 그만두어라
@@ -40,7 +41,8 @@ $(function(){
 	})
 	
 	// 버튼 별로 기능 분류
-	$(document).on("click","button",function(){
+	//$(document).on("click","button",function(){
+	$("button").click(function(){
 		
 		let txt = $(this).text()
 		if(txt == '수정'){
@@ -83,19 +85,23 @@ $(function(){
 			})
 		} else if(txt == '목록') {
 			document.location.href="${rootPath}/board"
+				+"?currentPageNo=1&search=&kategorie="
 		}
 		
 	})
 	
 	$("#ftu").click(function(){
 		
-		id = ${bbsVO.b_id}
+		let id = ${bbsVO.b_id}
 		//alert(${bbsVO.b_id})
-		alert(id)
+		//alert(id)
+		
+		b_id = $(this).data("id")
+		alert("b_id값:" + b_id)
 		$.ajax({
 					url : "${rootPath}/board/recommend_up",
 					data : {
-						b_id : ${bbsVO.b_id},
+						b_id : id,
 						"${_csrf.parameterName}" : "${_csrf.token}"
 						},
 					type : "POST",
@@ -115,13 +121,13 @@ $(function(){
 	
 	$("#ftd").click(function(){
 		
-		id = ${bbsVO.b_id}
+		let id = ${bbsVO.b_id}
 		//alert(${bbsVO.b_id})
-		alert(id)
+		//alert(id)
 		$.ajax({
 					url : "${rootPath}/board/recommend_down",
 					data : {
-						b_id : ${bbsVO.b_id},
+						b_id : id,
 						"${_csrf.parameterName}" : "${_csrf.token}"
 						},
 					type : "POST",
@@ -137,6 +143,68 @@ $(function(){
 						alert("추천 불가")
 					}
 		})
+	})
+	
+
+	// 댓글 추천
+	$(".cftu").click(function(){
+		let id = $(this).data("id")
+		//alert(id)
+		
+		let bid = $(this).data("bid")
+		//alert("b_id값:"+bid)
+		
+		let bbsvoid = "${bbsVO.b_id}"
+		//alert("bbsvoid : " + bbsvoid)
+		$.ajax({
+					url : "${rootPath}/comment/recommend_up",
+					data : {
+						c_id : id,
+						"${_csrf.parameterName}" : "${_csrf.token}"
+						},
+					type : "POST",
+					success : function(result){
+						if(result < 1){
+							alert("이미 추천했습니다.")
+						} else {
+							alert("추천 성공")
+							document.location.replace("${rootPath}/board/detail?b_id=${bbsVO.b_id}")
+						}
+					},
+					error : function() {
+						alert("추천 불가")
+					}
+				})
+			
+	})
+	
+	// 댓글 비추천
+	$(".cftd").click(function(){
+		let id = $(this).data("id")
+		//alert(id)
+		
+		let bid = $(this).data("bid")
+		//alert("b_id값:"+bid)
+		
+		$.ajax({
+					url : "${rootPath}/comment/recommend_down",
+					data : {
+						c_id : id,
+						"${_csrf.parameterName}" : "${_csrf.token}"
+						},
+					type : "POST",
+					success : function(result){
+						if(result < 1){
+							alert("이미 추천했습니다.")
+						} else {
+							alert("비추천 성공")
+							document.location.replace("${rootPath}/board/detail?b_id="+bid)
+						}
+					},
+					error : function() {
+						alert("추천 불가")
+					}
+				})
 	})
 	
 })
@@ -163,8 +231,10 @@ $(function(){
 		<div class="bbsview_text">
 			<p>${bbsVO.b_text}</p>
 		</div>
-		<button id="ftu" type="button">추천<i class="far fa-thumbs-up" ></i></button>
-		<button id="ftd" type="button">비추천<i class="far fa-thumbs-down" ></i></button>
+		<div align="center">
+			<button class="w3-button w3-khaki w3-round-large" id="ftu" type="button" data-id="${bbsVO.b_id}">추천<i class="far fa-thumbs-up" ></i></button>
+			<button class="w3-button w3-khaki w3-round-large" id="ftd" type="button" data-id="${bbsVO.b_id}">비추천<i class="far fa-thumbs-down" ></i></button>
+		</div>
 		<hr/>
 	</article>
 	<article>

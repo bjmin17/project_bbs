@@ -142,33 +142,6 @@ public class BBsService {
 		return ret;
 	}
 
-	private boolean recommend_id_check(String loginUsername, String b_id) {
-		// TODO Auto-generated method stub
-		
-		log.debug("추천 아이디 체크 : " + loginUsername);
-		
-		BBsVO bbsVO = bDao.findById(b_id);
-		bbsVO.setB_recommend(bbsVO.getB_recommend()+1);
-		
-//		BRecommendVO b_recommend  = new BRecommendVO();
-		BRecommendVO b_recommend = bDao.findRecommendById(loginUsername);
-		// 추천을 하려면 추천 테이블
-		// 값이 하나도 없으면 (null 이면) true;
-		// 값이 있는데(!= null)
-		//		이전에 username과 b_id가 똑같은게 있다면 return false;
-		//		두개 다 똑같은게 없다면 return true;
-		if(b_recommend != null) {
-			if(b_recommend.getB_r_username().equals(loginUsername) && 
-				b_recommend.getB_r_board_id().equals(b_id)) return false;
-			else {
-				return true;
-			}
-			
-		} else {
-			return true;
-		}
-	}
-
 	public int recommend_down(String b_id, String loginUsername) {
 		// TODO Auto-generated method stub
 		BBsVO bbsVO = bDao.findById(b_id);
@@ -183,4 +156,38 @@ public class BBsService {
 		
 		return ret;
 	}
+	
+	private boolean recommend_id_check(String loginUsername, String b_id) {
+		// TODO Auto-generated method stub
+		
+		log.debug("추천 아이디 체크 : " + loginUsername);
+		
+		BBsVO bbsVO = bDao.findById(b_id);
+		bbsVO.setB_recommend(bbsVO.getB_recommend()+1);
+		
+//		BRecommendVO b_recommend  = new BRecommendVO();
+		BRecommendVO b_recommend = bDao.findRecommendById(b_id);
+
+		// 추천을 하려면 추천 테이블
+		// 값이 하나도 없으면 (null 이면) true;
+		// 값이 있는데(!= null)
+		//		이전에 username과 c_id가 똑같은게 있다면 return false;
+		//		두개 다 똑같은게 없다면 return true;
+		if(b_recommend != null) {
+			if(b_recommend.getB_r_username().equals(loginUsername) && 
+					b_recommend.getB_r_board_id().equals(b_id)) {
+//					if(c_recommend.getC_r_username().equals(loginUsername) && 
+//							c_recommend.getC_r_board_id().equals(c_id)) {
+				log.debug("댓글 추천 테이블 의 추천 당한 c_id : "+b_recommend.getB_r_board_id());
+				return false;
+			}
+			else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+
+
 }

@@ -19,53 +19,7 @@
 </style>
 <script>
 $(function(){
-	$(".ftu").click(function(){
-		let id = $(this).data("id")
-		alert(id)
-		$.ajax({
-					url : "${rootPath}/comment/recommend_up",
-					data : {
-						c_id : id,
-						"${_csrf.parameterName}" : "${_csrf.token}"
-						},
-					type : "POST",
-					success : function(result){
-						if(result < 1){
-							alert("이미 추천했습니다.")
-						} else {
-							alert("추천 성공")
-							document.location.replace("${rootPath}/board/detail?b_id=${bbsVO.b_id}")
-						}
-					},
-					error : function() {
-						alert("추천 불가")
-					}
-				})
-	})
-	
-	$(".ftd").click(function(){
-		let id = $(this).data("id")
-		alert(id)
-		$.ajax({
-					url : "${rootPath}/comment/recommend_down",
-					data : {
-						c_id : id,
-						"${_csrf.parameterName}" : "${_csrf.token}"
-						},
-					type : "POST",
-					success : function(result){
-						if(result < 1){
-							alert("이미 추천했습니다.")
-						} else {
-							alert("추천 성공")
-							document.location.replace("${rootPath}/board/detail?b_id=${bbsVO.b_id}")
-						}
-					},
-					error : function() {
-						alert("추천 불가")
-					}
-				})
-	})
+
 })
 </script>
 <div class="row p-4 cmt-item">
@@ -85,11 +39,12 @@ $(function(){
 		<p>
 		<div class="row">
 			<div class="font-awesome">
-				<p class="ftu" data-id="${COMMENT.c_id}"><i class="far fa-thumbs-up" ></i></p>
+				<p class="cftu" data-id="${COMMENT.c_id}"><i class="far fa-thumbs-up" ></i></p>
 				<p>
 				<span>${COMMENT.c_recommend}</span>
 				<p>
-				<p class="ftd" data-id="${COMMENT.c_id}"><i class="far fa-thumbs-down"></i></p>
+				
+				<p class="cftd" data-id="${COMMENT.c_id}" data-bid="${bbsVO.b_id}"><i class="far fa-thumbs-down"></i></p>
 			</div>
 			<div class="row cmt cmt-item" data-id="${COMMENT.c_id}">
 				<div class="col-2 mt-1 ml-1 mb-1 writer">

@@ -11,6 +11,7 @@ $(function(){
 		let id = $(this).attr("data-id")
 		// alert(id)
 		document.location.href = "${rootPath}/board/detail?b_id=" + id
+				+ "&currentPageNo=${currentPageNo}&search=${search}&kategorie=${kategorie}"
 	})
 	/*
 	//$("#search_button").click(function(){
@@ -40,6 +41,10 @@ $(function(){
 	display: flex;
 	justify-content: center;
 }
+.search_div{
+	display: flex;
+	justify-content: center;
+}
 </style>
 </head>
 <body>
@@ -60,16 +65,7 @@ $(function(){
 		  </div>
 		  <input type="text" class="form-control" placeholder="Username">
 		</div>
-		<form action="${rootPath}/board" method="GET">
-			<!-- <input type="text" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
-		  	<select name="kategorie" class="news_button">
-			    <option value="allList" selected="selected">전체</option>
-			    <option value="title">제목</option>
-			    <option value="content">내용</option>
-			</select>
-			<input name="search" id="search_input">
-			<button class="search_button" id="search_button">검색</button>
-		</form>
+		
 		<article class="article_table">
 			<table class="table table-hover">
 				<c:choose>
@@ -87,6 +83,7 @@ $(function(){
 								<th>저자</th>
 								<th>첨부파일</th>
 								<th>조회수</th>
+								<th>추천</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -98,6 +95,7 @@ $(function(){
 								<td>${BBS.b_writer}</td>
 								<td>첨부파일</td>
 								<td>${BBS.b_count}</td>
+								<td>${BBS.b_recommend}</td>
 							</tr>		
 						</c:forEach>
 						</tbody>
@@ -110,6 +108,20 @@ $(function(){
 				<a href="${rootPath}/board/insert"><button type="button" class="btn btn-primary btn-insert mb-3"><i class="fas fa-pen"></i>등록</button></a>
 			</div>
 		</article>
+		
+		<div class="search_div mb-3">
+			<form action="${rootPath}/board" method="GET">
+				<!-- <input type="text" name="${_csrf.parameterName}" value="${_csrf.token}"> -->
+			  	<select name="kategorie" class="news_button">
+				    <option value="allList" selected="selected">전체</option>
+				    <option value="title">제목</option>
+				    <option value="content">내용</option>
+				</select>
+				<input name="search" id="search_input">
+				<button class="search_button" id="search_button">검색</button>
+			</form>
+		</div>
+		
 		<div class="pagination">
 			<%@ include file="/WEB-INF/views/include/include-pagination.jspf" %>
 		</div>

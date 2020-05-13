@@ -41,9 +41,12 @@ public interface CommentDao {
 	public int delete(long c_id);
 
 	// 댓글 추천수 중복 조회 위한 메서드
-	@Select("SELECT * FROM tbl_c_recommend WHERE c_r_username = #{loginUsername}")
-	public CRecommendVO findRecommendById(String loginUsername);
+	@Select("SELECT * FROM tbl_c_recommend WHERE c_r_id = #{c_id}")
+	public CRecommendVO findRecommendById(@Param("c_id") long c_id, @Param("loginUsername") String loginUsername);
 
 	public void insertRecommend(@Param("c_id")String c_id, @Param("loginUsername") String loginUsername);
+	
+	@Select("SELECT * FROM tbl_c_recommend WHERE c_r_board_id = #{c_id}")
+	public List<CRecommendVO> findRecommendByIds(@Param("c_id") String c_id);
 
 }
