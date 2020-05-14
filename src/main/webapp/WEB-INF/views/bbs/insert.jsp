@@ -65,6 +65,102 @@
 				}
 			}
 		})
+		
+		// 사진 업로드 기능 
+		$("#d_d_box").on('dragover',function(e){
+			$("#d_d_box h3").text("파일을 내려 놓으세요!!!")
+			return false
+		})
+		
+		/*
+			file 1개를 Drag and Drop으로 업로드 수행하기
+			업로드 되면서 e가 그 정보를 담고 있음.
+			e.originalEvent.dataTransfer.files : 정보를 뽑아내고
+			0번째 위치 값을 뽑아냄
+		*/
+		/* imgV3
+		$("#d_d_box").on('drop',function(e){
+			$("#d_d_box h3").text("파일 업로드 중!!!")
+			
+			// drop한 파일리스트 추출
+			let files = e.originalEvent.dataTransfer.files
+			let fileLen = files.length
+			
+			// if(fileLen > 1) {
+				
+				// 파일업로드를 위한 객체만들기
+				let formData = new FormData()
+				
+				// Drop한 파일들을 모두 추가
+				for(let i = 0; i < fileLen ; i ++) {
+					formData.append('files', files[i])
+				}
+				
+				//alert("파일 개수 : " + fileLen)
+				
+				files_up(formData)
+				
+				return false;
+			
+			return false
+		})*/
+		
+		$("#d_d_box").on('drop',function(e){
+			$("#d_d_box h3").text("파일 업로드 중!!!")
+			
+			// drop한 파일리스트 추출
+			let files = e.originalEvent.dataTransfer.files
+			
+			// 리스트에서 첫번째 파일만 추출
+			let file = files[0]
+			alert(file.name)
+			
+			// 추출된 파일 정보를 서버에 먼저 업로드
+			
+			// js FormData 클래스를 
+			// 사용해서 서버에 파일 업로드 준비
+			let formData = new FormData()
+			formData.append('file',file)
+			
+			$.ajax({
+				url : "${rootPath}/board/rest/file_up",
+				type : "POST",
+				data : 
+					{
+					formData : formData,
+					"${_csrf.parameterName}" : "${_csrf.token}"
+					},
+				
+				// 파일을 올릴 때는 이 두가지가 필수
+				processData : false, /* 파일업로드 필수 옵션 */
+				contentType : false, /* 파일업로드 필수 옵션 */
+				
+				success : function(result) {
+					alert("사진 업로드 ajax")					
+					alert("사진 rest컨트롤러 거쳐온 값 : " + result)					
+					if(result == 'FAIL') {
+						alert("파일 업로드 오류")
+					} else {
+						$("#img_file").val(result)
+						$("#img_view").css("display","block")
+						$("#img_view").attr("src",'${rootPath}/images/' + result)
+						
+						$("#d_d_box h3").text("파일업로드 성공!!!")
+						$("#d_d_box h3").css("display")
+					}
+					
+					alert(result)
+				},
+				
+				error:function() {
+					alert("서버 통신 오류")
+				}
+			})
+			
+			return false
+		})
+		
+		
 	})
 </script>
 </head>
@@ -78,6 +174,13 @@
 				</div>
 				<div class="form-group summer">
 					<textarea id="b_text" name="b_text" rows="20" cols="100" >${bbsVO.b_text}</textarea>
+				</div>
+				<div class="input_box">
+					<input type="hidden" name="b_file" id="img_file" value="${bbsVO.b_file}"/>
+					<div id="d_d_box">
+						<h3>이미지를 올려놓으세요</h3>
+						<img id="img_view" height="95%">
+					</div>		
 				</div>
 				<div class="form-group d-flex justify-content-end">
 					<button type="button" class="btn btn-primary btn-save mr-2">저장</button>

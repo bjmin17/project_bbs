@@ -32,6 +32,10 @@
 		</param-value>
 	</context-param>
 	
+	<filter>
+	    <filter-name>MultipartFilter</filter-name>
+	    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
 	<!-- security 와 관련된 filter는 반드시 여기에 작성 -->
 	<!-- 한글 encoding과 관련된 filter는 반드시 security 보다 앞에 위치해야 한다. -->
 	<filter>
@@ -39,6 +43,10 @@
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
 	
+	<filter-mapping>
+	    <filter-name>MultipartFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<!-- filter mapping : 선언된 필터를 사용할 수 있도록 url 패턴과 연결하는 절차 필요 -->
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>

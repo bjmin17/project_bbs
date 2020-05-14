@@ -49,23 +49,9 @@ $(function(){
 </head>
 <body>
 <%@ include file = "/WEB-INF/views/include/include-nav.jspf" %>
-	<h2>bbs 페이지</h2>
+	<h2>게시판</h2>
 	<hr/>
 	<section>
-		<div class="input-group mt-3 mb-3">
-		  <div class="input-group-prepend">
-		    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
-		      Dropdown button
-		    </button>
-		    <div class="dropdown-menu">
-		      <a class="dropdown-item" href="#">Link 1</a>
-		      <a class="dropdown-item" href="#">Link 2</a>
-		      <a class="dropdown-item" href="#">Link 3</a>
-		    </div>
-		  </div>
-		  <input type="text" class="form-control" placeholder="Username">
-		</div>
-		
 		<article class="article_table">
 			<table class="table table-hover">
 				<c:choose>
@@ -122,7 +108,7 @@ $(function(){
 			</form>
 		</div>
 		
-		<div class="pagination">
+		<div class="pagination mt-5">
 			<%@ include file="/WEB-INF/views/include/include-pagination.jspf" %>
 		</div>
 	</section>

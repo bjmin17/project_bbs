@@ -97,7 +97,7 @@ $(function(){
 		//alert(id)
 		
 		b_id = $(this).data("id")
-		alert("b_id값:" + b_id)
+		//alert("b_id값:" + b_id)
 		$.ajax({
 					url : "${rootPath}/board/recommend_up",
 					data : {
