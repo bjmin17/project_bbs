@@ -2,10 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file = "/WEB-INF/views/include/include-head.jspf" %>
+<sec:csrfMetaTags/>
+<meta id="_csrf" name="_csrf" content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta id="_csrf_header" name="_csrf_header" content="${_csrf.headerName}"/>
 <style>
 #b_text {
 	width: 100%;
@@ -13,6 +18,12 @@
 </style>
 <script>
 	$(function(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$(document).ajaxSend(function(e, xhr, options) {
+	        xhr.setRequestHeader(header, token);
+	    })
+		
 		$(document).on("click","button.btn-save",function(){
 			let b_subject = $("#b_subject")
 			let b_text = $("#b_text")
@@ -78,32 +89,6 @@
 			e.originalEvent.dataTransfer.files : 정보를 뽑아내고
 			0번째 위치 값을 뽑아냄
 		*/
-		/* imgV3
-		$("#d_d_box").on('drop',function(e){
-			$("#d_d_box h3").text("파일 업로드 중!!!")
-			
-			// drop한 파일리스트 추출
-			let files = e.originalEvent.dataTransfer.files
-			let fileLen = files.length
-			
-			// if(fileLen > 1) {
-				
-				// 파일업로드를 위한 객체만들기
-				let formData = new FormData()
-				
-				// Drop한 파일들을 모두 추가
-				for(let i = 0; i < fileLen ; i ++) {
-					formData.append('files', files[i])
-				}
-				
-				//alert("파일 개수 : " + fileLen)
-				
-				files_up(formData)
-				
-				return false;
-			
-			return false
-		})*/
 		
 		$("#d_d_box").on('drop',function(e){
 			$("#d_d_box h3").text("파일 업로드 중!!!")
@@ -123,14 +108,10 @@
 			formData.append('file',file)
 			
 			$.ajax({
-				url : "${rootPath}/board/rest/file_up",
+				url : "${rootPath}/board/file_up",
 				type : "POST",
-				data : 
-					{
-					formData : formData,
-					"${_csrf.parameterName}" : "${_csrf.token}"
-					},
-				
+				data : 	formData,
+				enctype : "multipart/form-data",
 				// 파일을 올릴 때는 이 두가지가 필수
 				processData : false, /* 파일업로드 필수 옵션 */
 				contentType : false, /* 파일업로드 필수 옵션 */
@@ -186,6 +167,7 @@
 					<button type="button" class="btn btn-primary btn-save mr-2">저장</button>
 					<a href="${rootPath}/board"><button type="button" class="btn btn-success">목록으로</button></a>
 				</div>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			</form:form>
 			
 		</fieldset>

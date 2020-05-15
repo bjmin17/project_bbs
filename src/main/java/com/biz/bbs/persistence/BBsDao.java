@@ -58,6 +58,8 @@ public interface BBsDao {
 
 	@Select("SELECT * FROM tbl_b_recommend WHERE b_r_board_id = #{b_id}")
 	public BRecommendVO findRecommendById(String b_id);
+
+	public int update_view(BBsVO bbsVO);
 	
 	
 

@@ -189,5 +189,10 @@ public class BBsService {
 		}
 	}
 
+	public int update_view(BBsVO bbsVO) {
+
+		return bDao.update_view(bbsVO);
+	}
+
 
 }

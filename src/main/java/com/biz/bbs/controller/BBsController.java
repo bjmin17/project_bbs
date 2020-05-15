@@ -137,7 +137,9 @@ public class BBsController {
 		this.commentList(c_b_id + "", model);
 		
 		BBsVO bbsVO = bService.findById(b_id);
+		bbsVO.setB_count(bbsVO.getB_count()+1);
 		
+		bService.update_view(bbsVO);
 		model.addAttribute("bbsVO",bbsVO);
 		
 		return "bbs/view";
@@ -243,10 +245,10 @@ public class BBsController {
 	 */
 	
 	@ResponseBody
-	@RequestMapping(value="/rest/file_up", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@RequestMapping(value="/file_up", method=RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	public String file_up(@RequestParam("file") MultipartFile upFile) {
 		
-		log.debug("BBS컨트롤러 로그"+upFile.toString());
+		log.debug("BBS컨트롤러 로그 전달된 파일 이름 : "+upFile.toString());
 		String upLoadFileName = fService.file_up(upFile);
 		
 		log.debug("레스트 컨트롤러 : " + upLoadFileName);
