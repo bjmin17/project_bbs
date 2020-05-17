@@ -51,7 +51,7 @@ public class UserController {
 		uService.insert(username, password);
 		
 //		return String.format("아이디 : <b>%s</b>, 비밀번호 : <b>%s</b>", username, password);
-		return "redirect:/";
+		return "redirect:/user/login";
 	}
 	
 	@ResponseBody

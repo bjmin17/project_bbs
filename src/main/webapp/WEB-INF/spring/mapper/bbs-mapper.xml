@@ -83,7 +83,8 @@
 				SET
 				`B_SUBJECT` = #{b_subject},
 				`B_TEXT` = #{b_text},
-				`B_RECOMMEND` = #{b_recommend}
+				`B_RECOMMEND` = #{b_recommend},
+				`B_file` = #{b_file}
 				
 				WHERE `B_ID` = #{b_id}
 		

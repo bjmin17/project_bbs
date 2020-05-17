@@ -61,7 +61,7 @@
 		<security:intercept-url pattern="/user/password" access="hasAnyRole('ADMIN','USER')"/>
 		<security:intercept-url pattern="/user/**" access="permitAll()"/>
 		<security:intercept-url pattern="/board/insert" access="hasAnyRole('ADMIN','USER')"/>
-		<security:intercept-url pattern="/board/**" access="permitAll()"/>
+		<security:intercept-url pattern="/board/**" access="hasAnyRole('ADMIN','USER')"/>
 		<security:intercept-url pattern="/comment/insert" access="hasAnyRole('ADMIN','USER')"/>
 		<security:intercept-url pattern="/comment/**" access="permitAll()"/>
 		<security:intercept-url pattern="/**" access="permitAll()"/>

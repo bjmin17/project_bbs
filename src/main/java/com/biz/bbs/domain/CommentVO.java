@@ -1,5 +1,7 @@
 package com.biz.bbs.domain;
 
+import javax.validation.constraints.NotEmpty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +22,8 @@ public class CommentVO {
 	private long c_p_id;//	NUMBER
 	private String c_date_time;//	VARCHAR2(30)
 	private String c_writer;//	nVARCHAR2(30)
+	
+	@NotEmpty
 	private String c_subject;//	nVARCHAR2(125)
 	private long c_recommend;
 }

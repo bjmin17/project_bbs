@@ -2,6 +2,8 @@ package com.biz.bbs.domain;
 
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,10 +21,16 @@ public class BBsVO {
 	
 	private long b_id;//	bigint	auto_increment	primary key,
 	private long b_p_id;//	bigint,	-- default 	,
+	
+	@NotEmpty
 	private String b_writer;//	varchar(50)	not null	,
 	private String b_date;//	varchar(10)	not null	,
 	private String b_time;//	varchar(10)	not null	,
+	
+	@NotEmpty(message = "제목을 입력해야 합니다.")
 	private String b_subject;//	varchar(125)	not null	,
+	
+	@NotEmpty(message = "내용을 입력해야 합니다.")
 	private String b_text;//	varchar(1000)	not null	,
 	private long b_count;//	bigint	default 0
 	private long b_recommend;

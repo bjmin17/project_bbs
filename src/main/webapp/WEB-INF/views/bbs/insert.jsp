@@ -18,7 +18,7 @@
 </style>
 <script>
 	$(function(){
-		var rootPath = "${rootPath"
+		var rootPath = "${rootPath}"
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$(document).ajaxSend(function(e, xhr, options) {
@@ -131,7 +131,7 @@
 						$("#d_d_box h3").css("display")
 					}
 					
-					alert(result)
+					//alert(result)
 				},
 				
 				error:function() {
