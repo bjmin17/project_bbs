@@ -38,7 +38,7 @@ public class BBsService {
 
 	public int insert(BBsVO bbsVO, String loginUsername) {
 		// TODO insert
-
+		log.debug("B서비스 파일 이름 : "+bbsVO.getB_file());
 		bbsVO.setB_writer(loginUsername);
 		
 		LocalDate ld = LocalDate.now();  // 날짜 구하기 2020-05-07

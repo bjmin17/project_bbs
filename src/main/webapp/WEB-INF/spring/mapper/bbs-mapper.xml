@@ -53,13 +53,15 @@
 					`B_DATE`,
 					`B_TIME`,
 					`B_SUBJECT`,
-					`B_TEXT`
+					`B_TEXT`,
+					`B_FILE`
 				) VALUES (
 					#{b_writer},
 					#{b_date},
 					#{b_time},
 					#{b_subject},
-					#{b_text}
+					#{b_text},
+					#{b_file}
 					)
 					
 	</insert> 

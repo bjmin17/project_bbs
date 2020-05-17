@@ -16,10 +16,10 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/css/**" location="/css/" />
 	<resources mapping="/js/**" location="/js/" />
-	<resources mapping="/images/**" location="/images/,file:///c:/developer/files" />
+	<resources mapping="/images/**" location="/images/,file:///c:/developer/files/" />
 
 	<beans:bean id="filePath" class="java.lang.String">
-		<beans:constructor-arg value="/developer/files"/>
+		<beans:constructor-arg value="/developer/files/"/>
 	</beans:bean>
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->

@@ -18,6 +18,7 @@
 </style>
 <script>
 	$(function(){
+		var rootPath = "${rootPath"
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$(document).ajaxSend(function(e, xhr, options) {
@@ -98,7 +99,7 @@
 			
 			// 리스트에서 첫번째 파일만 추출
 			let file = files[0]
-			alert(file.name)
+			//alert(file.name)
 			
 			// 추출된 파일 정보를 서버에 먼저 업로드
 			
@@ -117,8 +118,8 @@
 				contentType : false, /* 파일업로드 필수 옵션 */
 				
 				success : function(result) {
-					alert("사진 업로드 ajax")					
-					alert("사진 rest컨트롤러 거쳐온 값 : " + result)					
+					//alert("사진 업로드 ajax")					
+					//alert("사진 rest컨트롤러 거쳐온 값 : " + result)					
 					if(result == 'FAIL') {
 						alert("파일 업로드 오류")
 					} else {
@@ -163,6 +164,11 @@
 						<img id="img_view" height="95%">
 					</div>		
 				</div>
+				<c:if test="${!empty bbsVO.b_file}">
+					<div class="input_box">
+						<img src="${rootPath}/images/${bbsVO.b_file}" width="200px">
+					</div>
+				</c:if>
 				<div class="form-group d-flex justify-content-end">
 					<button type="button" class="btn btn-primary btn-save mr-2">저장</button>
 					<a href="${rootPath}/board"><button type="button" class="btn btn-success">목록으로</button></a>

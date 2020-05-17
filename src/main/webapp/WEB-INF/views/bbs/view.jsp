@@ -231,6 +231,12 @@ $(function(){
 		<div class="bbsview_text">
 			<p>${bbsVO.b_text}</p>
 		</div>
+		<div>
+			<c:if test="${!empty bbsVO.b_file}">
+				<img src="${rootPath}/images/${bbsVO.b_file}" width="100%" height="80%">
+			</c:if>
+			
+		</div>
 		<div align="center">
 			<button class="w3-button w3-khaki w3-round-large" id="ftu" type="button" data-id="${bbsVO.b_id}">추천<i class="far fa-thumbs-up" ></i></button>
 			<button class="w3-button w3-khaki w3-round-large" id="ftd" type="button" data-id="${bbsVO.b_id}">비추천<i class="far fa-thumbs-down" ></i></button>
