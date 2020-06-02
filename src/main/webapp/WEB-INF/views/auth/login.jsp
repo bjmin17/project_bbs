@@ -13,6 +13,23 @@
 		$(document).on("click","button.join",function(){
 			document.location.href="${rootPath}/join"
 		})
+		
+		$(".btn-login").click(function(){
+			let username = $("#username").val()
+			let password = $("#password").val()
+			
+			if(username == "") {
+				alert("아이디를 입력하세요")
+				$("#username").focus()
+				return false
+			} else if (password == "") {
+				alert("비밀번호를 입력하세요")
+				$("#password").focus()
+				return false
+			} else {
+				$("form").submit()
+			}
+		})
 	})
 	</script>
 	<style>
@@ -46,7 +63,7 @@
 				<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
 			</div>
 			<div class="mb-3">
-				<button class="btn btn-primary">로그인</button>
+				<button type="button" class="btn btn-primary btn-login">로그인</button>
 				<button class="btn btn-success join" type="button">회원가입</button>
 			</div> 
 			

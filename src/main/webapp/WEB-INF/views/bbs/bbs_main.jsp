@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="num" value="${pageVO.totalCount - ((pageVO.currentPageNo-1) * 10) }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,7 +76,7 @@ $(function(){
 						<tbody>
 							<c:forEach items="${BBS_LIST}" var="BBS" varStatus="i">
 							<tr class="bbs_view" data-id="${BBS.b_id}">
-								<td>${i.count}</td>
+								<td>${num}</td>
 								<td>${BBS.b_subject}</td>
 								<td>${BBS.b_date}</td>
 								<td>${BBS.b_writer}</td>
@@ -83,6 +84,7 @@ $(function(){
 								<td>${BBS.b_count}</td>
 								<td>${BBS.b_recommend}</td>
 							</tr>		
+							<c:set var="num" value="${num-1}"></c:set>
 						</c:forEach>
 						</tbody>
 					</c:otherwise>

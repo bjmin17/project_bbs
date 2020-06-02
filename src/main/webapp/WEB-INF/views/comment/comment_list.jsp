@@ -23,9 +23,6 @@ $(function(){
 })
 </script>
 <div class="row p-4 cmt-item">
-	<div class="col-2 m-1 writer"><b>작성자</b></div>
-	<div class="col-6 m-1 subject">내용</div>
-	<div class="col-2 cmt-item-repl"><b>날짜</b></div>
 </div>
 <c:forEach var="COMMENT" items="${COMMENT}">
 	<hr/>
